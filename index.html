@@ -1,0 +1,1448 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>OVLoop API Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;Shell&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="Shell">Shell</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#overview" class="toc-h1 toc-link" data-title="Overview">Overview</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#security" class="toc-h2 toc-link" data-title="Overview">Security</a>
+                  </li>
+                  <li>
+                    <a href="#api-update-guidelines" class="toc-h2 toc-link" data-title="Overview">API Update Guidelines</a>
+                  </li>
+                  <li>
+                    <a href="#revision-history" class="toc-h2 toc-link" data-title="Overview">Revision History</a>
+                  </li>
+                  <li>
+                    <a href="#ovloop-rest-interface" class="toc-h2 toc-link" data-title="Overview">OVLoop REST interface</a>
+                  </li>
+                  <li>
+                    <a href="#allowed-http-requests" class="toc-h2 toc-link" data-title="Overview">Allowed HTTP Requests</a>
+                  </li>
+                  <li>
+                    <a href="#errors" class="toc-h2 toc-link" data-title="Overview">Errors</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#generate-access-token" class="toc-h2 toc-link" data-title="Authentication">Generate Access Token</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#organization" class="toc-h1 toc-link" data-title="Organization">Organization</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-child-organization" class="toc-h2 toc-link" data-title="Organization">Create a child organization</a>
+                  </li>
+                  <li>
+                    <a href="#get-organization-by-id" class="toc-h2 toc-link" data-title="Organization">Get organization by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-child-organizations-by-organization" class="toc-h2 toc-link" data-title="Organization">Get child organizations by organization</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#listing" class="toc-h1 toc-link" data-title="Listing">Listing</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-listing" class="toc-h2 toc-link" data-title="Listing">Create a listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-listings-by-organization" class="toc-h2 toc-link" data-title="Listing">Get listings by organization</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#campaign" class="toc-h1 toc-link" data-title="Campaign">Campaign</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-campaign" class="toc-h2 toc-link" data-title="Campaign">Create a campaign</a>
+                  </li>
+                  <li>
+                    <a href="#get-campaign-by-id" class="toc-h2 toc-link" data-title="Campaign">Get campaign by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-campaigns-by-listing" class="toc-h2 toc-link" data-title="Campaign">Get campaigns by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-campaigns-by-organization" class="toc-h2 toc-link" data-title="Campaign">Get campaigns by organization</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#offer" class="toc-h1 toc-link" data-title="Offer">Offer</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-an-offer" class="toc-h2 toc-link" data-title="Offer">Create an offer</a>
+                  </li>
+                  <li>
+                    <a href="#get-offer-by-id" class="toc-h2 toc-link" data-title="Offer">Get offer by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-offers-by-campaign" class="toc-h2 toc-link" data-title="Offer">Get offers by campaign</a>
+                  </li>
+                  <li>
+                    <a href="#get-offers-by-listing" class="toc-h2 toc-link" data-title="Offer">Get offers by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-offers-by-organization" class="toc-h2 toc-link" data-title="Offer">Get offers by organization</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#offer-instance" class="toc-h1 toc-link" data-title="Offer Instance">Offer Instance</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-offer-instance" class="toc-h2 toc-link" data-title="Offer Instance">Create offer instance</a>
+                  </li>
+                  <li>
+                    <a href="#get-offer-instance-by-id" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instance by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-offer-instances-by-listing" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instances by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-offer-instances-by-organization" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instances by organization</a>
+                  </li>
+                  <li>
+                    <a href="#get-offer-instances-by-profile" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instances by profile</a>
+                  </li>
+                  <li>
+                    <a href="#redeem-offer-instance" class="toc-h2 toc-link" data-title="Offer Instance">Redeem offer instance</a>
+                  </li>
+                  <li>
+                    <a href="#reverse-offer-instance" class="toc-h2 toc-link" data-title="Offer Instance">Reverse offer instance</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#loyalty-program-configurations" class="toc-h1 toc-link" data-title="Loyalty Program Configurations">Loyalty Program Configurations</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#rewards-by-visit" class="toc-h2 toc-link" data-title="Loyalty Program Configurations">Rewards by visit</a>
+                  </li>
+                  <li>
+                    <a href="#rewards-by-spend" class="toc-h2 toc-link" data-title="Loyalty Program Configurations">Rewards by spend</a>
+                  </li>
+                  <li>
+                    <a href="#special-event-rewards" class="toc-h2 toc-link" data-title="Loyalty Program Configurations">Special event rewards</a>
+                  </li>
+                  <li>
+                    <a href="#birthday-rewards" class="toc-h2 toc-link" data-title="Loyalty Program Configurations">Birthday rewards</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#loyalty-program" class="toc-h1 toc-link" data-title="Loyalty Program">Loyalty Program</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-loyalty-program" class="toc-h2 toc-link" data-title="Loyalty Program">Create a loyalty program</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-program-by-id" class="toc-h2 toc-link" data-title="Loyalty Program">Get loyalty program by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-programs-by-listing" class="toc-h2 toc-link" data-title="Loyalty Program">Get loyalty programs by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-programs-by-organization" class="toc-h2 toc-link" data-title="Loyalty Program">Get loyalty programs by organization</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#loyalty-program-membership" class="toc-h1 toc-link" data-title="Loyalty Program Membership">Loyalty Program Membership</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-membership" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Create a membership</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-membership-by-id" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get a membership by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-memberships-by-listing" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-memberships-by-organization" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by organization</a>
+                  </li>
+                  <li>
+                    <a href="#get-memberships-by-profile" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by profile</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#loyalty-program-participating-listing" class="toc-h1 toc-link" data-title="Loyalty Program Participating Listing">Loyalty Program Participating Listing</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-participating-listing" class="toc-h2 toc-link" data-title="Loyalty Program Participating Listing">Create a participating listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-participating-listing-by-id" class="toc-h2 toc-link" data-title="Loyalty Program Participating Listing">Get a participating listing by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-participating-listings-by-listing" class="toc-h2 toc-link" data-title="Loyalty Program Participating Listing">Get participating listings by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-participating-listings-by-loyalty-program" class="toc-h2 toc-link" data-title="Loyalty Program Participating Listing">Get participating listings by loyalty program</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#loyalty-reward" class="toc-h1 toc-link" data-title="Loyalty Reward">Loyalty Reward</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-loyalty-reward" class="toc-h2 toc-link" data-title="Loyalty Reward">Create a loyalty reward</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-reward-by-id" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty reward by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-rewards-by-listing" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-rewards-by-loyalty-program" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards by loyalty program</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-rewards-summary" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards summary</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-rewards-detail" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards detail</a>
+                  </li>
+                  <li>
+                    <a href="#get-qualifying-events-summary" class="toc-h2 toc-link" data-title="Loyalty Reward">Get qualifying events summary</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#loyalty-reward-event" class="toc-h1 toc-link" data-title="Loyalty Reward Event">Loyalty Reward Event</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-a-loyalty-reward-event" class="toc-h2 toc-link" data-title="Loyalty Reward Event">Create a loyalty reward event</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-reward-event-by-id" class="toc-h2 toc-link" data-title="Loyalty Reward Event">Get loyalty reward event by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-reward-events-by-loyalty-reward" class="toc-h2 toc-link" data-title="Loyalty Reward Event">Get loyalty reward events by loyalty reward</a>
+                  </li>
+                  <li>
+                    <a href="#redeem-loyalty-reward-event-i-e-reward" class="toc-h2 toc-link" data-title="Loyalty Reward Event">Redeem loyalty reward event (i.e., reward)</a>
+                  </li>
+                  <li>
+                    <a href="#reverse-loyalty-reward-event" class="toc-h2 toc-link" data-title="Loyalty Reward Event">Reverse loyalty reward event</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+        <ul class="toc-footer">
+            <li><a href='https://onvocal.com'>&copy; 2017, ONvocal, Inc.</a></li>
+        </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='overview'>Overview</h1>
+<blockquote>
+<p>API Endpoint</p>
+
+<p>https://ovloop.io</p>
+</blockquote>
+
+<p>OVLoop API is a simple RESTful interface that enables third-party components to access functionality of the OVLoop one-touch loyalty platform. This document is the official reference for that functionality.</p>
+
+<p>This document should be used by third-party developers who wish to integrate their products with OVLoop.</p>
+
+<p>We have language bindings in Shell (other languages to be provided in the future)!  You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+
+<p>OVLoop API is organized around REST and uses HTTP verbs and response codes that most clients are familiar with. All requests must be formatted as Content-Type: application/json (except where noted). All responses are also formatted JSON, encoded in the UTF-8 character encoding (Content-Type: application/json; charset=utf-8). The Accept header will be ignored for all requests.</p>
+<h2 id='security'>Security</h2>
+<p>OVLoop uses <a href="https://jwt.io">JSON Web Tokens</a> with <a href="https://oauth.net/2/">OAuth2</a> for authentication of clients (i.e. &quot;profiles&quot;) with OVLoop API. JSON Web Tokens are an open, industry standard [RFC 7519] https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties. Tokens received are used within headers of subsequent requests to the OVLoop API.</p>
+
+<ol>
+<li>First, encode your client credentials as instructed in the Authentication section below.</li>
+<li>Then you exchange these client credentials for an OAuth 2.0 JSON Web Bearer token.</li>
+<li>Once you’ve done that, you simply include your token with all of your OVLoop requests.</li>
+</ol>
+
+<p>An authorization header containing a valid access token must be included in every OVLoop API request like follows:</p>
+
+<p><code language="http">
+    Authorization: bearer {{token}}
+</code></p>
+
+<aside class="notice">
+You must replace <code>{{token}}</code> with your JSON web token.
+</aside>
+
+<p>The bearer token is your key to accessing all of your resources via OVLoop API for the next 24-hour period. Keep it safe.</p>
+
+<p>SSL must be used in all OVLoop API interactions.</p>
+<h2 id='api-update-guidelines'>API Update Guidelines</h2>
+<p>Our API is constantly being updated with new features and improvements to existing ones. These updates ensure the API evolves with customer and industry demands. Managing this change to ensure we provide a reliable, consistent, and backward compatible API design is a critical challenge for our team. Every new and improved feature is put through a peer review process to ensure:</p>
+
+<ol>
+<li>it will not change an existing resource to the extent it breaks current customer implementations,</li>
+<li>that it is consistent with existing resources (therefore predictable and easy to use).</li>
+</ol>
+
+<p>The following guidelines are used in our peer review process to understand what constitutes acceptable change for our API and our customers.</p>
+
+<p><strong>Changes we avoid:</strong></p>
+
+<ul>
+<li>Removing or renaming request or response content fields</li>
+<li>Removing or renaming query string parameters</li>
+<li>Removing or changing the location of a resource</li>
+<li>Changing the API domain</li>
+</ul>
+
+<p><strong>Changes we approve and introduce:</strong></p>
+
+<ul>
+<li>Adding new resources</li>
+<li>Adding new, optional request content fields</li>
+<li>Adding new, optional query string parameters</li>
+<li>Adding new response content fields</li>
+<li>Adding new response header information</li>
+</ul>
+
+<p>If, for any reason, we cannot avoid any of the non-backward compatible changes mentioned above, we will implement a deprecation schedule. This schedule will be provided to all customers with the goal of giving them adequate time to accommodate the updates.</p>
+
+<p>Looking further out, as our API evolves and industry standards dictate, we do anticipate the possibility that an entirely new API version will be needed. If and when that happens we will, once again, provide a deprecation schedule for the existing version that will ensure all customers have time to upgrade.</p>
+
+<p><strong>Additional information:</strong></p>
+
+<p>Undocumented resources and properties are considered to be in beta release and are subject to change without notification.</p>
+<h2 id='revision-history'>Revision History</h2>
+<table><thead>
+<tr>
+<th>Date</th>
+<th>OVLoop version</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>09/07/2017</td>
+<td>1.0</td>
+<td>Initial version.</td>
+</tr>
+<tr>
+<td>10/09/2017</td>
+<td>1.1</td>
+<td>Second version with functionality for OVLoop partners.</td>
+</tr>
+<tr>
+<td>10/24/2017</td>
+<td>1.2</td>
+<td>Moved documentation to Slate platform.</td>
+</tr>
+</tbody></table>
+<h2 id='ovloop-rest-interface'>OVLoop REST interface</h2>
+<p>OVLoop API REST interface is powered by .NET Core Web API. It exposes server functionality to the clients via a combination of HTTP and XML or JSON protocols.</p>
+<h3 id='json'>JSON</h3>
+<p>OVLoop API supports the JSON language for the REST protocol via content negotiation mechanism. The same values should be used for <code>Content-Type</code> HTTP header when submitting data in the request body (POST and PUT methods).</p>
+
+<p>For authentication, only &#39;x-www-form-urlencoded&#39; format is accepted.</p>
+<h2 id='allowed-http-requests'>Allowed HTTP Requests</h2>
+<ul>
+<li><code>GET</code> - Get a resource or list of resources.</li>
+<li><code>POST</code> - To create a resource.</li>
+<li><code>PUT</code> - To update a resource.</li>
+</ul>
+<h2 id='errors'>Errors</h2>
+<p>OVLoop API always returns relevant HTTP status code which includes the <code>errorCode</code> (application
+specific code).  The error result can also specify one or more <code>parameter</code> elements, which further specify what went wrong.</p>
+
+<p><strong>An error response with an http code 404 (Bad Request):</strong></p>
+
+<p><code>
+HTTP/1.1 404 Bad Request:
+{
+    &quot;succeeded&quot; : false, &quot;error&quot; : {{errorMessage}}
+}
+</code></p>
+
+<p><strong>A successful GET response:</strong></p>
+
+<p><code>
+    HTTP/1.1 200 OK
+</code></p>
+
+<p><strong>A successful PUT response:</strong></p>
+
+<p><code>
+    HTTP/1.1 201 OK
+</code></p>
+
+<p>When an error is encountered you will receive an HTTP status code along with a message and error code in the body of the response. The message is intended to give a user-friendly explanation of the error while the error codes are designed to be machine readable codes that applications can use to better understand the context of the error and react appropriately.</p>
+
+<p>We use the following status codes for errors:</p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>400</td>
+<td><code>Bad Request</code> - The request could not be understood or was missing required parameters.</td>
+</tr>
+<tr>
+<td>401</td>
+<td><code>Unauthorized</code> - The authentication process failed, or the access token is not valid.</td>
+</tr>
+<tr>
+<td>403</td>
+<td><code>Forbidden</code> -- Access to the requested endpoint is restricted for the given caller.</td>
+</tr>
+<tr>
+<td>404</td>
+<td><code>Not Found</code> -- The specified resource could not be found.</td>
+</tr>
+<tr>
+<td>405</td>
+<td><code>Method Not Allowed</code> -- You tried to access a resource with an invalid method.</td>
+</tr>
+<tr>
+<td>406</td>
+<td><code>Not Acceptable</code> -- You requested a format that isn&#39;t json.</td>
+</tr>
+<tr>
+<td>410</td>
+<td><code>Gone</code> -- The requested resource entity has been removed from our servers.</td>
+</tr>
+<tr>
+<td>429</td>
+<td><code>Too Many Requests</code> -- Too many requests within a specific time limit.</td>
+</tr>
+<tr>
+<td>500</td>
+<td><code>Internal Server Error</code> -- We had a problem with our server.  Try again later.</td>
+</tr>
+<tr>
+<td>503</td>
+<td><code>Service Unavailable</code> -- We&#39;re temporarily offline for maintenance.  Please try again later.</td>
+</tr>
+</tbody></table>
+<h1 id='authentication'>Authentication</h1>
+<p>OVLoop uses <a href="https://jwt.io">JSON Web Tokens</a> with <a href="https://oauth.net/2/">OAuth2</a> for authentication of clients (i.e. &quot;profiles&quot;) with OVLoop API.  JSON Web Tokens are an open, industry standard [RFC 7519] https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties.  Tokens received are used within headers of subsequent requests to the OVLoop API.</p>
+
+<p>The following properties are used with Authentication:</p>
+
+<p><strong>Available Authentication data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>client_id</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The client ID.  This ID will be provided to you by the OVLoop support team and is application specific.</td>
+</tr>
+<tr>
+<td><strong>grant_type</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The grant type. Use &quot;client_credentials&quot; for accesing resources from a server.</td>
+</tr>
+<tr>
+<td><strong>client_secret</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The client secret provided to you when being issues the client Id.</td>
+</tr>
+</tbody></table>
+<h2 id='generate-access-token'>Generate Access Token</h2>
+<p>JSON web tokens tokens are long-lived (24 hours) authentication tokens that can be used to replace expired access tokens without providing user credentials. JSON web tokens are issued when an access token is requested using OVLoop client credentials.</p>
+
+<p>When requesting an access token using a refresh token you must use a grant type of ‘client_credentials’. The client Id and client secret must also be provided in the request header.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://ovloop.io/api/oauth2/token</code></p>
+<h3 id='request-headers'>Request Headers</h3>
+<p><code>Content-Type: application/x-www-form-urlencoded</code></p>
+
+<blockquote>
+<p>To authorize, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{clientId}}` with your client Id and `{{clientSecret}}` with your client secret.</span>
+
+curl -i -X POST
+  -H <span class="s2">"Content-Type: application/x-www-form-urlencoded"</span>
+  -d <span class="s2">"client_id={{clientId}}&amp;grant_type=client_credentials&amp;client_secret={{clientSecret}}"</span>
+  --url <span class="s2">"https://ovloop.io/api/oauth2/token"</span>
+</code></pre>
+<blockquote>
+<p>Sample Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"token_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bearer"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"access_token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{{token}}"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expires_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">86400</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>token_type</strong></td>
+<td>The token type.</td>
+</tr>
+<tr>
+<td><strong>access_token</strong></td>
+<td>The access token. Use this token to authorize other API calls by placing it in the headers such as Authorization: bearer <code>{{access_token}}</code></td>
+</tr>
+<tr>
+<td><strong>expires_in</strong></td>
+<td>The number of seconds from token issuance to expiration.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+The returned value in `{{token}}` is the JSON web token to be used with all subsequent API requests.
+</aside>
+<h1 id='organization'>Organization</h1>
+<p>The Organization resource represents an organization boarded on the OVLoop platform that can have one or many merchant listings/destinations with offers or loyalty rewards programs.</p>
+
+<p>The following properties are used with Organization:</p>
+
+<p><strong>Available Authentication data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>organizationId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>A system-generated GUID that uniquely identifies the organization</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The name of the organization.</td>
+</tr>
+<tr>
+<td><strong>parentOrganizationId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The GUID of the parent organization.</td>
+</tr>
+</tbody></table>
+<h2 id='create-a-child-organization'>Create a child organization</h2>
+<p>This endpoint creates a child organization underneath an existing parent (e.g., a reseller or partner).</p>
+
+<p>The only field needed to create a child organization is the organization name.  The organizationId and parentOrganizationId are populated by the system.</p>
+
+<p>A successful create operation will return a clientId and clientSecret.  These values should be saved by the caller and used to generate authorization tokens for acessing other API methods that create, edit, or retrieve resources belonging to this organization.</p>
+
+<p>In addition, the organizationId will be returned in the Location header and should be saved to update the organization after creation.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://ovloop.io/api/organization</code></p>
+<h3 id='request-headers'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To create a sample child organization, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
+
+curl -i -X POST
+  -H <span class="s2">"Content-Type: application/json"</span>
+  -H <span class="s2">"Authorization: bearer {{token}}"</span>
+  -d <span class="s2">"{ 'name': 'Sample Organization' }"</span>
+  --url <span class="s2">"https://ovloop.io/api/Organization/Child"</span>
+</code></pre>
+<blockquote>
+<p>Sample Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Organization"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Sample Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"clientId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a1e85778985f4555bac159c8e8e54d8d"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"clientSecret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lGF-hponqH-UAVBLSfHpOavArNNV7_6K4i8p8h1TTxg"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"allowRestrictedApiGrant"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"allowProfileGrant"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"allowClientCredentialsGrant"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"applicationId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"organizationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a1646e2d-1caf-4173-bab0-88b6c7893651"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p><strong>Request Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The name of the organization.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>clientId</td>
+<td>The client_id value used for authentication for creating resources that belong to this organization.</td>
+</tr>
+<tr>
+<td>clientSecret</td>
+<td>The client_secret value used for authentication for creating resources that belong to this organization.</td>
+</tr>
+<tr>
+<td>allowRestrictedApiGrant</td>
+<td>Specifies whether the created child organization has restricted API grant permissions.  Default is <code>false</code>.</td>
+</tr>
+<tr>
+<td>allowProfileGrant</td>
+<td>Specifies whether the created child organization has profile grant permissions.  Default is <code>false</code>.</td>
+</tr>
+<tr>
+<td>allowClientCredentialsGrant</td>
+<td>Specifies whether the created child organization has client credentials grant permissions.  Default is <code>false</code>.</td>
+</tr>
+<tr>
+<td>applicationId</td>
+<td>ApplicationId for the primary application associated with the organization.  Default is <code>null</code>.</td>
+</tr>
+<tr>
+<td>organizationId</td>
+<td>The organization Id for the created child organization.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+The caller should retain the `organizationId` generated within their own system for future API calls for the specific organization.
+</aside>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-organization-by-id'>Get organization by Id</h2>
+<p>Not yet documented.</p>
+<h2 id='get-child-organizations-by-organization'>Get child organizations by organization</h2>
+<p>Not yet documented.</p>
+<h1 id='listing'>Listing</h1>
+<p>The Listing resource represents the merchant location(s) which is sponsoring the offer(s) and/or loyalty program(s).</p>
+
+<p>The following properties are used with Listing:</p>
+
+<p><strong>Available Listing data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>title</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing title screen seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>listingName</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing name seen in a merchant admin portal. Not seen by consumers.</td>
+</tr>
+<tr>
+<td><strong>description</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>A description of the business; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>address</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing&#39;s address.</td>
+</tr>
+<tr>
+<td><strong>phoneNumber</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing&#39;s phone number without any formatting or special characters.</td>
+</tr>
+<tr>
+<td><strong>categoriesList</strong></td>
+<td>array (Category)</td>
+<td>Y</td>
+<td>TO DOCUMENT (COPY FROM EXAMPLE FOR NOW)</td>
+</tr>
+<tr>
+<td><strong>weblink</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The URL of the listing&#39;s website; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>facebookUrl</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The listing&#39;s Fackbook URL; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>twitterUrl</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The listing&#39;s Twitter URL; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>latitude</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The latitude of the listing&#39;s location. This is used for notifications triggered by a geofence around the listing&#39;s location.</td>
+</tr>
+<tr>
+<td><strong>longitude</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The longitude of the listing&#39;s location. This is used for notifications triggered by a geofence around the listing&#39;s location.</td>
+</tr>
+<tr>
+<td><strong>radius</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The radius of the geofence for the listing. Allowed values are 200 or 500.</td>
+</tr>
+<tr>
+<td><strong>notificationTitle</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The body of the notification triggered by the geofence.</td>
+</tr>
+<tr>
+<td><strong>rapidAppIdList</strong></td>
+<td>array</td>
+<td>Y</td>
+<td>TO DOCUMENT (COPY FROM EXAMPLE FOR NOW)</td>
+</tr>
+<tr>
+<td><strong>scheduleDays</strong></td>
+<td>array (ScheduleDay)</td>
+<td>Y</td>
+<td>The listing&#39;s business hours. Please see the ScheduleDay properties table below for the nested object&#39;s format.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Available ScheduleDay data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>dayOfWeek</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The day of week, starting from Sunday, represented as a number between 0 and 6.</td>
+</tr>
+<tr>
+<td><strong>startTime</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The start time of this period (24-hour format <code>HH:MM:SS</code>).</td>
+</tr>
+<tr>
+<td><strong>endTime</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The end time of this period (24-hour format <code>HH:MM:SS</code>).</td>
+</tr>
+<tr>
+<td><strong>closed</strong></td>
+<td>boolean</td>
+<td>Y</td>
+<td>Signifies if the listing is closed for the specified day.  The default is <code>false</code>.</td>
+</tr>
+</tbody></table>
+<h2 id='create-a-listing'>Create a listing</h2>
+<p>This endpoint creates a merchant listing. The listingId will be returned in the Location header and should be saved to update the listing after creation. Above are the fields related to the Listing resource including field types and whether the fields are required for resource creation.  It is <strong><em>highly recommended</em></strong> that the boarding process utilize as many of the Listing fields as possible.  The sample request utilizes all fields.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://ovloop.io/api/listing</code></p>
+<h3 id='headers'>Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To create a sample listing, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
+
+curl -i -X POST
+  -H <span class="s2">"Content-Type: application/json"</span>
+  -H <span class="s2">"Authorization: bearer {{token}}
+  -d "</span><span class="o">{</span> <span class="s1">'title'</span>: <span class="s1">'Acme Stores'</span>,
+        <span class="s1">'listingName'</span>: <span class="s1">'Acme, Inc. Store 333 - Danvers, MA'</span>,
+        <span class="s1">'description'</span>: <span class="s1">'Acme Stores are the no. 1 retailer for all things generic.'</span>,
+        <span class="s1">'address'</span>: <span class="s1">'240 Newbury Street, Danvers, MA  01923'</span>,
+        <span class="s1">'categoriesList'</span>:[<span class="o">{</span><span class="s1">'categoryId'</span>: <span class="s1">'25e28199-63e0-46a5-9bd5-67ec0abd8eef'</span>, <span class="s1">'primaryCategory'</span>: <span class="nb">true</span><span class="o">}]</span>,
+        <span class="s1">'weblink'</span>: <span class="s1">'https://acmestores.com'</span>,
+        <span class="s1">'facebookUrl'</span>:<span class="s1">'https://www.facebook.com/acmestores'</span>,
+        <span class="s1">'twitterUrl'</span>:<span class="s1">'https://twitter.com/acmestores'</span>,
+        <span class="s1">'latitude'</span>: <span class="s1">'29.986107'</span>,
+        <span class="s1">'longitude'</span>: <span class="s1">'-90.059544'</span>,
+        <span class="s1">'radius'</span>: 200,
+        <span class="s1">'notificationTitle'</span>: <span class="s1">'Welcome to Acme'</span>,
+        <span class="s1">'notificationBody'</span>: <span class="s1">'Enjoy our great deals'</span>,
+        <span class="s1">'phoneNumber'</span>: <span class="s1">'111-111-1111'</span>,
+        <span class="s1">'rapidAppIdList'</span>: <span class="o">[</span>
+            <span class="o">{</span>
+                <span class="s1">'appWrapperId'</span>: <span class="s1">'5feda480-ef3c-4937-9115-4854f70f9044'</span>
+            <span class="o">}</span>
+        <span class="o">]</span>,
+        <span class="s1">'scheduleDays'</span>: <span class="o">[</span>
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 0,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 1,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 2,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 3,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 4,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 5,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>,
+            <span class="o">{</span>
+                <span class="s1">'dayOfWeek'</span>: 6,
+                <span class="s1">'startTime'</span>: <span class="s1">'00:00:00'</span>,
+                <span class="s1">'endTime'</span>: <span class="s1">'23:59:00'</span>
+            <span class="o">}</span>
+        <span class="o">]</span>
+     <span class="o">}</span><span class="s2">"
+  --url "</span>https://ovloop.io/api/Listing<span class="s2">"
+</span></code></pre>
+<blockquote>
+<p>Sample Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Acme Stores"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"listingName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Acme, Inc. Store 333 - Danvers, MA"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Acme Stores are the no. 1 retailer for all things generic."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"240 Newbury Street, Danvers, MA  01923"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"categoriesList"</span><span class="p">:[{</span><span class="s2">"categoryId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25e28199-63e0-46a5-9bd5-67ec0abd8eef"</span><span class="p">,</span><span class="w"> </span><span class="s2">"primaryCategory"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">}],</span><span class="w">
+    </span><span class="s2">"weblink"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://acme.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"facebookUrl"</span><span class="p">:</span><span class="s2">"https://www.facebook.com/acme"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"twitterUrl"</span><span class="p">:</span><span class="s2">"https://twitter.com/acme"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"latitude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"29.986107"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"longitude"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-90.059544"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"radius"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"notificationTitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Welcome to Acme!"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"notificationBody"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enjoy our great deals!"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phoneNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111-111-1111"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"rapidAppIdList"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"appWrapperId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5feda480-ef3c-4937-9115-4854f70f9044"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"scheduleDays"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"closed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00:00:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23:59:00"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00:00:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23:59:00"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00:00:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23:59:00"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00:00:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23:59:00"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00:00:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23:59:00"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"dayOfWeek"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"00:00:00"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"23:59:00"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Sample Response Header</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 201 Created
+
+Location: /api/Listing/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5
+
+</code></pre>
+<p><strong>Request Body (Listing)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>title</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing title screen seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>listingName</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing name seen in a merchant admin portal. Not seen by consumers.</td>
+</tr>
+<tr>
+<td><strong>description</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>A description of the business; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>address</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing&#39;s address.</td>
+</tr>
+<tr>
+<td><strong>phoneNumber</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The listing&#39;s phone number without any formatting or special characters.</td>
+</tr>
+<tr>
+<td><strong>categoriesList</strong></td>
+<td>array (Category)</td>
+<td>Y</td>
+<td>TO DOCUMENT (COPY FROM EXAMPLE FOR NOW)</td>
+</tr>
+<tr>
+<td><strong>weblink</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The URL of the listing&#39;s website; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>facebookUrl</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The listing&#39;s Fackbook URL; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>twitterUrl</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The listing&#39;s Twitter URL; seen by consumers inside the OVLoop app.</td>
+</tr>
+<tr>
+<td><strong>latitude</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The latitude of the listing&#39;s location. This is used to for notifications triggered by a geofence around the listing&#39;s location.</td>
+</tr>
+<tr>
+<td><strong>longitude</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The longitude of the listing&#39;s location. This is used to for notifications triggered by a geofence around the listing&#39;s location.</td>
+</tr>
+<tr>
+<td><strong>radius</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The radius of the geofence for the listing. Allowed values are 200 or 500.</td>
+</tr>
+<tr>
+<td><strong>notificationTitle</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The body of the notification triggered by the geofence.</td>
+</tr>
+<tr>
+<td><strong>rapidAppIdList</strong></td>
+<td>array</td>
+<td>Y</td>
+<td>TO DOCUMENT (COPY FROM EXAMPLE FOR NOW)</td>
+</tr>
+<tr>
+<td><strong>scheduleDays</strong></td>
+<td>array (ScheduleDay)</td>
+<td>Y</td>
+<td>The listing&#39;s business hours.  Please see ScheduleDay below for nested object format.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Request Body (ScheduleDays)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>dayOfWeek</strong></td>
+<td>number</td>
+<td>Y</td>
+<td>The day of week, starting from Sunday, represented as a number between 0 and 6.</td>
+</tr>
+<tr>
+<td><strong>startTime</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The start time of this period (24-hour format <code>HH:MM:SS</code>).</td>
+</tr>
+<tr>
+<td><strong>endTime</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The end time of this period (24-hour format <code>HH:MM:SS</code>).</td>
+</tr>
+<tr>
+<td><strong>closed</strong></td>
+<td>boolean</td>
+<td>Y</td>
+<td>Signifies if the listing is closed for the specified day.  The default is <code>false</code>.</td>
+</tr>
+</tbody></table>
+
+<aside class="notice">
+The caller should retain the `listingId` generated and displayed in the Location header within their own system for use with future API calls for the specific listing.
+</aside>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-listings-by-organization'>Get listings by organization</h2>
+<p>Not yet documented.</p>
+<h1 id='campaign'>Campaign</h1><h2 id='create-a-campaign'>Create a campaign</h2><h2 id='get-campaign-by-id'>Get campaign by Id</h2><h2 id='get-campaigns-by-listing'>Get campaigns by listing</h2><h2 id='get-campaigns-by-organization'>Get campaigns by organization</h2><h1 id='offer'>Offer</h1><h2 id='create-an-offer'>Create an offer</h2><h2 id='get-offer-by-id'>Get offer by Id</h2><h2 id='get-offers-by-campaign'>Get offers by campaign</h2><h2 id='get-offers-by-listing'>Get offers by listing</h2><h2 id='get-offers-by-organization'>Get offers by organization</h2><h1 id='offer-instance'>Offer Instance</h1><h2 id='create-offer-instance'>Create offer instance</h2><h2 id='get-offer-instance-by-id'>Get offer instance by Id</h2><h2 id='get-offer-instances-by-listing'>Get offer instances by listing</h2><h2 id='get-offer-instances-by-organization'>Get offer instances by organization</h2><h2 id='get-offer-instances-by-profile'>Get offer instances by profile</h2><h2 id='redeem-offer-instance'>Redeem offer instance</h2><h2 id='reverse-offer-instance'>Reverse offer instance</h2><h1 id='loyalty-program-configurations'>Loyalty Program Configurations</h1>
+<p><strong>TO DO:  Summary of rewards by visit, rewards by spend, special event rewards, and birthday rewards</strong></p>
+<h2 id='rewards-by-visit'>Rewards by visit</h2>
+<p>Text to follow.</p>
+<h2 id='rewards-by-spend'>Rewards by spend</h2>
+<p>Text to follow.</p>
+<h2 id='special-event-rewards'>Special event rewards</h2>
+<p>Text to follow.</p>
+<h2 id='birthday-rewards'>Birthday rewards</h2>
+<p>Text to follow.</p>
+<h1 id='loyalty-program'>Loyalty Program</h1><h2 id='create-a-loyalty-program'>Create a loyalty program</h2><h2 id='get-loyalty-program-by-id'>Get loyalty program by Id</h2><h2 id='get-loyalty-programs-by-listing'>Get loyalty programs by listing</h2><h2 id='get-loyalty-programs-by-organization'>Get loyalty programs by organization</h2><h1 id='loyalty-program-membership'>Loyalty Program Membership</h1><h2 id='create-a-membership'>Create a membership</h2><h2 id='get-a-membership-by-id'>Get a membership by Id</h2><h2 id='get-memberships-by-listing'>Get memberships by listing</h2><h2 id='get-memberships-by-organization'>Get memberships by organization</h2><h2 id='get-memberships-by-profile'>Get memberships by profile</h2><h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="Shell">Shell</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
