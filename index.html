@@ -275,23 +275,6 @@
               </ul>
           </li>
           <li>
-            <a href="#campaign" class="toc-h1 toc-link" data-title="Campaign">Campaign</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#create-a-campaign" class="toc-h2 toc-link" data-title="Campaign">Create a campaign</a>
-                  </li>
-                  <li>
-                    <a href="#get-campaign-by-id" class="toc-h2 toc-link" data-title="Campaign">Get campaign by Id</a>
-                  </li>
-                  <li>
-                    <a href="#get-campaigns-by-listing" class="toc-h2 toc-link" data-title="Campaign">Get campaigns by listing</a>
-                  </li>
-                  <li>
-                    <a href="#get-campaigns-by-organization" class="toc-h2 toc-link" data-title="Campaign">Get campaigns by organization</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
             <a href="#offer" class="toc-h1 toc-link" data-title="Offer">Offer</a>
               <ul class="toc-list-h2">
                   <li>
@@ -308,32 +291,6 @@
                   </li>
                   <li>
                     <a href="#get-offers-by-organization" class="toc-h2 toc-link" data-title="Offer">Get offers by organization</a>
-                  </li>
-              </ul>
-          </li>
-          <li>
-            <a href="#offer-instance" class="toc-h1 toc-link" data-title="Offer Instance">Offer Instance</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#create-offer-instance" class="toc-h2 toc-link" data-title="Offer Instance">Create offer instance</a>
-                  </li>
-                  <li>
-                    <a href="#get-offer-instance-by-id" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instance by Id</a>
-                  </li>
-                  <li>
-                    <a href="#get-offer-instances-by-listing" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instances by listing</a>
-                  </li>
-                  <li>
-                    <a href="#get-offer-instances-by-organization" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instances by organization</a>
-                  </li>
-                  <li>
-                    <a href="#get-offer-instances-by-profile" class="toc-h2 toc-link" data-title="Offer Instance">Get offer instances by profile</a>
-                  </li>
-                  <li>
-                    <a href="#redeem-offer-instance" class="toc-h2 toc-link" data-title="Offer Instance">Redeem offer instance</a>
-                  </li>
-                  <li>
-                    <a href="#reverse-offer-instance" class="toc-h2 toc-link" data-title="Offer Instance">Reverse offer instance</a>
                   </li>
               </ul>
           </li>
@@ -920,7 +877,7 @@ The caller should retain the `organizationId` generated within their own system 
 </tr>
 </thead><tbody>
 <tr>
-<td>200</td>
+<td>201</td>
 <td>successful request</td>
 </tr>
 <tr>
@@ -1100,7 +1057,7 @@ The caller should retain the `organizationId` generated within their own system 
 <p>This endpoint creates a merchant listing. The listingId will be returned in the Location header and should be saved to update the listing after creation. Above are the fields related to the Listing resource including field types and whether the fields are required for resource creation.  It is <strong><em>highly recommended</em></strong> that the boarding process utilize as many of the Listing fields as possible.  The sample request utilizes all fields.</p>
 <h3 id='http-request'>HTTP Request</h3>
 <p><code>POST https://ovloop.io/api/listing</code></p>
-<h3 id='headers'>Headers</h3>
+<h3 id='request-headers'>Request Headers</h3>
 <p><code>Content-Type: application/json</code></p>
 
 <p><code>Authorization: bearer {{token}}</code></p>
@@ -1381,6 +1338,12 @@ Location: /api/Listing/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5
 </tr>
 </tbody></table>
 
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 201 Created</code></p>
+
+<p><code>Location: /api/Listing/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5</code></p>
+
 <aside class="notice">
 The caller should retain the `listingId` generated and displayed in the Location header within their own system for use with future API calls for the specific listing.
 </aside>
@@ -1394,7 +1357,7 @@ The caller should retain the `listingId` generated and displayed in the Location
 </tr>
 </thead><tbody>
 <tr>
-<td>200</td>
+<td>201</td>
 <td>successful request</td>
 </tr>
 <tr>
@@ -1426,7 +1389,449 @@ The caller should retain the `listingId` generated and displayed in the Location
 </tbody></table>
 <h2 id='get-listings-by-organization'>Get listings by organization</h2>
 <p>Not yet documented.</p>
-<h1 id='campaign'>Campaign</h1><h2 id='create-a-campaign'>Create a campaign</h2><h2 id='get-campaign-by-id'>Get campaign by Id</h2><h2 id='get-campaigns-by-listing'>Get campaigns by listing</h2><h2 id='get-campaigns-by-organization'>Get campaigns by organization</h2><h1 id='offer'>Offer</h1><h2 id='create-an-offer'>Create an offer</h2><h2 id='get-offer-by-id'>Get offer by Id</h2><h2 id='get-offers-by-campaign'>Get offers by campaign</h2><h2 id='get-offers-by-listing'>Get offers by listing</h2><h2 id='get-offers-by-organization'>Get offers by organization</h2><h1 id='offer-instance'>Offer Instance</h1><h2 id='create-offer-instance'>Create offer instance</h2><h2 id='get-offer-instance-by-id'>Get offer instance by Id</h2><h2 id='get-offer-instances-by-listing'>Get offer instances by listing</h2><h2 id='get-offer-instances-by-organization'>Get offer instances by organization</h2><h2 id='get-offer-instances-by-profile'>Get offer instances by profile</h2><h2 id='redeem-offer-instance'>Redeem offer instance</h2><h2 id='reverse-offer-instance'>Reverse offer instance</h2><h1 id='loyalty-program-configurations'>Loyalty Program Configurations</h1>
+<h1 id='offer'>Offer</h1>
+<p>The Offer resource represents an offer sponsored by an Organization.  The offerId will be returned in the Location header and should be saved to update the listing after creation.</p>
+
+<p>Below are the fields related to the Offer resource including field types and whether the fields are required for resource creation:</p>
+
+<p><strong>Available Offer data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>offerId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The offer Id (system generated)</td>
+</tr>
+<tr>
+<td><strong>title</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The offer title.</td>
+</tr>
+<tr>
+<td><strong>description</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The offer description.</td>
+</tr>
+<tr>
+<td><strong>legalText</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The offer legal text.</td>
+</tr>
+<tr>
+<td><strong>validStart</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The offer&#39;s state date (example format: <code>2017-11-01T13:29:34+00:00</code>).</td>
+</tr>
+<tr>
+<td><strong>validEnd</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The offer&#39;s end date (example format: <code>2017-12-31T23:59:59+00:00</code>).</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>DateTimeOffset</td>
+<td>Y</td>
+<td>The creation date and time for the offer (system generated).</td>
+</tr>
+<tr>
+<td><strong>sku</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The offer SKU.</td>
+</tr>
+<tr>
+<td><strong>keyword</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The offer keyword.</td>
+</tr>
+<tr>
+<td><strong>discount</strong></td>
+<td>decimal</td>
+<td>N</td>
+<td>The offer discount which is used for absolute discounts only (i.e., $10 off).</td>
+</tr>
+<tr>
+<td><strong>estimatedRevenue</strong></td>
+<td>decimal</td>
+<td>N</td>
+<td>The offer&#39;s estimated revenue.</td>
+</tr>
+<tr>
+<td><strong>discountType</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer&#39;s discount type.  Available values are: <ul><li><code>0</code> - Absolute (the default value)</li><li><code>1</code> - Percentage</li><ul></td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer&#39;s status.  Available values are: <ul><li><code>0</code> - Inactive (the default value)</li><li><code>1</code> - Active</li><ul></td>
+</tr>
+<tr>
+<td><strong>redemptionList</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer redemption limit.</td>
+</tr>
+<tr>
+<td><strong>offersImagesList</strong></td>
+<td>array (ImageDetails)</td>
+<td>N</td>
+<td>The offer&#39;s images list.  Please ImageDetails below for object properties.</td>
+</tr>
+<tr>
+<td><strong>offerLogo</strong></td>
+<td>ImageDetails</td>
+<td>N</td>
+<td>The offer&#39;s logo.  Please ImageDetails below for object properties.</td>
+</tr>
+<tr>
+<td><strong>percentage</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer percentage which is used for relative discounts only (i.e., 20% off).</td>
+</tr>
+</tbody></table>
+
+<p><strong>Available ImageDetail data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>imageId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The image Id (system generated).</td>
+</tr>
+<tr>
+<td><strong>imageBaseLocation</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The image base location.</td>
+</tr>
+<tr>
+<td><strong>format</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The image format (i.e. <code>base64</code>).</td>
+</tr>
+<tr>
+<td><strong>sequence</strong></td>
+<td>int</td>
+<td>Y</td>
+<td>The image sequence number (default is 0).</td>
+</tr>
+</tbody></table>
+<h2 id='create-an-offer'>Create an offer</h2>
+<p>This endpoint creates an offer.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://ovloop.io/api/offer</code></p>
+<h3 id='request-headers'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To create a sample offer, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
+
+curl -i -X POST
+    -H <span class="s2">"Content-Type: application/json"</span>
+    -H <span class="s2">"Authorization: bearer {{token}}"</span>
+    -d <span class="s2">"{
+        'title': '20% off Pizza Tuesdays',
+        'description': 'Get 20% off any pizza each Tuesday evening between 5 pm and 9 pm',
+        'legalText': 'Terms and conditions may apply.',
+        'validStart': '2016-01-01T00:00:00+00:00',
+        'validEnd': '9999-12-31T23:59:59+00:00',
+        'sku': '1401',
+        'keyword': 'pizza',
+        'discount': 20,
+        'estimatedRevenue': 100000,
+        'discountTypeField': 0,
+        'status': 1,
+        'redemptionLimit': 1,
+        'offersImagesList': [
+            {
+                'imageBaseLocation': 'https://www.myImagesAreHere.com/images/621844551.jpg',
+                'format':'base64',
+                'sequence':0
+            },
+            {
+                'imageBaseLocation': 'https://www.myImagesAreHere.com/images/924567126.png',
+                'format':'base64',
+                'sequence':1
+            }
+        ],
+        'offerLogo':
+            {
+                'imageBaseLocation': 'https://www.myImagesAreHere.com/images/001231456.jpg',
+                'format': 'base64',
+                'sequence': 0
+            },
+        'percentage': 20
+    }"</span>
+    --url <span class="s2">"https://ovloop.io/api/Offer"</span>
+
+</code></pre>
+<blockquote>
+<p>Sample Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20% off Pizza Tuesdays"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off any pizza each Tuesday evening between 5 pm and 9 pm"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"legalText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Terms and conditions may apply."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"validStart"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2016-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"validEnd"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"sku"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1401"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"keyword"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pizza"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"discount"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"estimatedRevenue"</span><span class="p">:</span><span class="w"> </span><span class="mi">100000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"discountTypeField"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"redemptionLimit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"offersImagesList"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"imageBaseLocation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.myImagesAreHere.com/images/621844551.jpg"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"base64"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sequence"</span><span class="p">:</span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"imageBaseLocation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.myImagesAreHere.com/images/924567126.png"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"format"</span><span class="p">:</span><span class="s2">"base64"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sequence"</span><span class="p">:</span><span class="mi">1</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"offerLogo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"imageBaseLocation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.myImagesAreHere.com/images/001231456.jpg"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"base64"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"sequence"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"percentage"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>Sample Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 201 Created
+
+Location: /api/Offer/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5
+
+</code></pre>
+<p><strong>Request Body (Offer)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>title</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The offer title.</td>
+</tr>
+<tr>
+<td><strong>description</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The offer description.</td>
+</tr>
+<tr>
+<td><strong>legalText</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The offer legal text.</td>
+</tr>
+<tr>
+<td><strong>validStart</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The offer&#39;s state date (example format: <code>2017-11-01T13:29:34+00:00</code>).</td>
+</tr>
+<tr>
+<td><strong>validEnd</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The offer&#39;s end date (example format: <code>2017-12-31T23:59:59+00:00</code>).</td>
+</tr>
+<tr>
+<td><strong>sku</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The offer SKU.</td>
+</tr>
+<tr>
+<td><strong>keyword</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The offer keyword.</td>
+</tr>
+<tr>
+<td><strong>discount</strong></td>
+<td>decimal</td>
+<td>N</td>
+<td>The offer discount which is used for absolute discounts only (i.e., $10 off).</td>
+</tr>
+<tr>
+<td><strong>estimatedRevenue</strong></td>
+<td>decimal</td>
+<td>N</td>
+<td>The offer&#39;s estimated revenue.</td>
+</tr>
+<tr>
+<td><strong>discountType</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer&#39;s discount type.  Available values are: <ul><li><code>0</code> - Absolute (the default value)</li><li><code>1</code> - Percentage</li></ul></td>
+</tr>
+<tr>
+<td><strong>status</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer&#39;s status.  Available values are: <ul><li><code>0</code> - Inactive (the default value)</li><li><code>1</code> - Active</li></ul></td>
+</tr>
+<tr>
+<td><strong>redemptionList</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer redemption limit.</td>
+</tr>
+<tr>
+<td><strong>offersImagesList</strong></td>
+<td>array (ImageDetail)</td>
+<td>N</td>
+<td>The offer&#39;s images list.  Please ImageDetails below for object properties.</td>
+</tr>
+<tr>
+<td><strong>offerLogo</strong></td>
+<td>ImageDetails</td>
+<td>N</td>
+<td>The offer&#39;s logo.  Please ImageDetails below for object properties.</td>
+</tr>
+<tr>
+<td><strong>percentage</strong></td>
+<td>int</td>
+<td>N</td>
+<td>The offer percentage which is used for relative discounts only (i.e., 20% off).</td>
+</tr>
+</tbody></table>
+
+<p><strong>Request Body (ImageDetail)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>imageBaseLocation</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The image base location.</td>
+</tr>
+<tr>
+<td><strong>format</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The image format (i.e. <code>base64</code>).</td>
+</tr>
+<tr>
+<td><strong>sequence</strong></td>
+<td>int</td>
+<td>Y</td>
+<td>The image sequence number (default is 0).</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 201 Created</code></p>
+
+<p><code>Location: /api/Listing/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5</code></p>
+
+<aside class="notice">
+The caller should retain the `offerId` generated and displayed in the Location header within their own system for use with future API calls for the specific listing.
+</aside>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-offer-by-id'>Get offer by Id</h2>
+<p>Not yet documented.</p>
+<h2 id='get-offers-by-campaign'>Get offers by campaign</h2>
+<p>Not yet documented.</p>
+<h2 id='get-offers-by-listing'>Get offers by listing</h2>
+<p>Not yet documented.</p>
+<h2 id='get-offers-by-organization'>Get offers by organization</h2>
+<p>Not yet documented.</p>
+<h1 id='loyalty-program-configurations'>Loyalty Program Configurations</h1>
 <p><strong>TO DO:  Summary of rewards by visit, rewards by spend, special event rewards, and birthday rewards</strong></p>
 <h2 id='rewards-by-visit'>Rewards by visit</h2>
 <p>Text to follow.</p>
@@ -1436,7 +1841,181 @@ The caller should retain the `listingId` generated and displayed in the Location
 <p>Text to follow.</p>
 <h2 id='birthday-rewards'>Birthday rewards</h2>
 <p>Text to follow.</p>
-<h1 id='loyalty-program'>Loyalty Program</h1><h2 id='create-a-loyalty-program'>Create a loyalty program</h2><h2 id='get-loyalty-program-by-id'>Get loyalty program by Id</h2><h2 id='get-loyalty-programs-by-listing'>Get loyalty programs by listing</h2><h2 id='get-loyalty-programs-by-organization'>Get loyalty programs by organization</h2><h1 id='loyalty-program-membership'>Loyalty Program Membership</h1><h2 id='create-a-membership'>Create a membership</h2><h2 id='get-a-membership-by-id'>Get a membership by Id</h2><h2 id='get-memberships-by-listing'>Get memberships by listing</h2><h2 id='get-memberships-by-organization'>Get memberships by organization</h2><h2 id='get-memberships-by-profile'>Get memberships by profile</h2><h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
+<h1 id='loyalty-program'>Loyalty Program</h1>
+<p>The loyalty program resource represents the loyalty program being sponsored by the merchant.</p>
+
+<p>Below are the fields related to the LoyaltyProgram resource including field types and whether the fields are required for resource creation:</p>
+
+<p><strong>Available LoyaltyProgram data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>GUID</td>
+<td>N</td>
+<td>The loyalty program ID (system generated).</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The loyalty program name.</td>
+</tr>
+<tr>
+<td><strong>organizationId</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The organization ID for the merchant organization sponsoring the loyalty program.</td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>DateTimeOffset</td>
+<td>Y</td>
+<td>The start date for the loyalty program. If not provided, the current date and time will be used.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>DateTimeOffset</td>
+<td>Y</td>
+<td>The end date for the loyalty program. If not provided, <code>9999-12-31 23:59:59 +00:00</code> will be used.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The timestamp of the loyalty program creation (system generated).</td>
+</tr>
+</tbody></table>
+<h2 id='create-a-loyalty-program'>Create a loyalty program</h2>
+<p>This endpoint creates a new loyalty program entity.  The loyaltyProgramId will be returned in the Location header and should be saved to update the listing after creation.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://ovloop.io/api/LoyaltyProgram</code></p>
+<h3 id='request-headers'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To create a sample loyalty program, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>
+<span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
+
+curl -i -X POST
+  -H <span class="s2">"authorization: bearer {{token}}"</span>
+  -H <span class="s2">"content-type: application/json"</span>
+  -d <span class="s2">"{
+    'name': 'Sample Organization Real Rewards',
+    'organizationId': 'f9875701-e883-413a-8770-7f43925b6f75'
+    }"</span>
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgram"</span>
+
+</code></pre>
+<blockquote>
+<p>Sample Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Organization Real Rewards"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"organizationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f9875701-e883-413a-8770-7f43925b6f75"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Sample Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 201 Created
+
+Location: /api/LoyaltyProgram/25579a2e-ff2b-4cc5-a0b6-17140375da18
+
+</code></pre>
+<p><strong>Available LoyaltyProgram data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>name</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The loyalty program name.</td>
+</tr>
+<tr>
+<td><strong>organizationId</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The organization ID for the merchant organization sponsoring the loyalty program.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 201 Created</code></p>
+
+<p><code>Location: /api/LoyaltyProgram/25579a2e-ff2b-4cc5-a0b6-17140375da18</code></p>
+
+<aside class="notice">
+The caller should retain the `loyaltyProgramId` generated within their own system for future API calls for the specific loyalty program.
+</aside>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>409</td>
+<td>foreign key or unique key constraint error - Id within the request body does not exist or entity already exists</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-loyalty-program-by-id'>Get loyalty program by Id</h2><h2 id='get-loyalty-programs-by-listing'>Get loyalty programs by listing</h2><h2 id='get-loyalty-programs-by-organization'>Get loyalty programs by organization</h2><h1 id='loyalty-program-membership'>Loyalty Program Membership</h1><h2 id='create-a-membership'>Create a membership</h2><h2 id='get-a-membership-by-id'>Get a membership by Id</h2><h2 id='get-memberships-by-listing'>Get memberships by listing</h2><h2 id='get-memberships-by-organization'>Get memberships by organization</h2><h2 id='get-memberships-by-profile'>Get memberships by profile</h2><h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
