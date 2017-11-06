@@ -284,9 +284,6 @@
                     <a href="#get-offer-by-id" class="toc-h2 toc-link" data-title="Offer">Get offer by Id</a>
                   </li>
                   <li>
-                    <a href="#get-offers-by-campaign" class="toc-h2 toc-link" data-title="Offer">Get offers by campaign</a>
-                  </li>
-                  <li>
                     <a href="#get-offers-by-listing" class="toc-h2 toc-link" data-title="Offer">Get offers by listing</a>
                   </li>
                   <li>
@@ -1778,7 +1775,7 @@ Location: /api/Offer/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5
 
 <p><code>HTTP/1.1 201 Created</code></p>
 
-<p><code>Location: /api/Listing/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5</code></p>
+<p><code>Location: /api/Offer/3f1509ca-ac54-4dc7-ac7a-765ef3f0f2c5</code></p>
 
 <aside class="notice">
 The caller should retain the `offerId` generated and displayed in the Location header within their own system for use with future API calls for the specific listing.
@@ -1824,8 +1821,6 @@ The caller should retain the `offerId` generated and displayed in the Location h
 </tr>
 </tbody></table>
 <h2 id='get-offer-by-id'>Get offer by Id</h2>
-<p>Not yet documented.</p>
-<h2 id='get-offers-by-campaign'>Get offers by campaign</h2>
 <p>Not yet documented.</p>
 <h2 id='get-offers-by-listing'>Get offers by listing</h2>
 <p>Not yet documented.</p>
@@ -2015,7 +2010,386 @@ The caller should retain the `loyaltyProgramId` generated within their own syste
 <td>unknown server error</td>
 </tr>
 </tbody></table>
-<h2 id='get-loyalty-program-by-id'>Get loyalty program by Id</h2><h2 id='get-loyalty-programs-by-listing'>Get loyalty programs by listing</h2><h2 id='get-loyalty-programs-by-organization'>Get loyalty programs by organization</h2><h1 id='loyalty-program-membership'>Loyalty Program Membership</h1><h2 id='create-a-membership'>Create a membership</h2><h2 id='get-a-membership-by-id'>Get a membership by Id</h2><h2 id='get-memberships-by-listing'>Get memberships by listing</h2><h2 id='get-memberships-by-organization'>Get memberships by organization</h2><h2 id='get-memberships-by-profile'>Get memberships by profile</h2><h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
+<h2 id='get-loyalty-program-by-id'>Get loyalty program by Id</h2>
+<p>This endpoint returns the loyalty program for the Id specified.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://ovloop.io/api/LoyaltyProgram/{Id}</code></p>
+<h3 id='uri-parameters'>URI Parameters</h3>
+<p><strong>Id</strong> <code>GUID</code> (required) - The unique identifier of the loyalty program.</p>
+<h3 id='request-headers-2'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To get loyalty program by Id, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{Id}}` with the loyalty program Id being queried.</span>
+
+curl -X GET
+  -H <span class="s2">"content-type: accept"</span> 
+  -H <span class="s2">"authorization: bearer {{token}}"</span> 
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgram/{{Id}}"</span>
+
+</code></pre>
+<blockquote>
+<p>Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 200 OK
+
+</code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Real Rewards"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"organizationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f9875701-e883-413a-8770-7f43925b6f75"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-02T23:02:01.1317996+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-02T23:01:59.4734384+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 200 OK</code></p>
+
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>The loyalty program name.</td>
+</tr>
+<tr>
+<td><strong>organizationId</strong></td>
+<td>The organization Id.</td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>The loyalty program start date.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>The loyalty program end date.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>The date and time of when the loyalty program was created.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>204</td>
+<td>no content found</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-loyalty-programs-by-listing'>Get loyalty programs by listing</h2>
+<p>This endpoint returns the loyalty program(s) for the listing Id specified.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://ovloop.io/api/LoyaltyProgram/Listing/{listingId}</code></p>
+<h3 id='uri-parameters-2'>URI Parameters</h3>
+<p><strong>listingId</strong> <code>GUID</code> (required) - The unique identifier of the listing.</p>
+<h3 id='request-headers-3'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To get loyalty program(s) by listing Id, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{listingId}}` with the listing Id being queried.</span>
+
+curl -X GET
+  -H <span class="s2">"content-type: accept"</span> 
+  -H <span class="s2">"authorization: bearer {{token}}"</span> 
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgram/Listing/{{listingId}}"</span>
+
+</code></pre>
+<blockquote>
+<p>Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 200 OK
+
+</code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Real Rewards"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"organizationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f9875701-e883-413a-8770-7f43925b6f75"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-02T23:02:01.1317996+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-02T23:01:59.4734384+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 200 OK</code></p>
+
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>The loyalty program name.</td>
+</tr>
+<tr>
+<td><strong>organizationId</strong></td>
+<td>The organization Id.</td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>The loyalty program start date.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>The loyalty program end date.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>The date and time of when the loyalty program was created.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>204</td>
+<td>no content found</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-loyalty-programs-by-organization'>Get loyalty programs by organization</h2>
+<p>This endpoint returns the loyalty program(s) for the organization Id specified.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://ovloop.io/api/LoyaltyProgram/Organization/{organizationId}</code></p>
+<h3 id='uri-parameters-3'>URI Parameters</h3>
+<p><strong>listingId</strong> <code>GUID</code> (required) - The unique identifier of the organization.</p>
+<h3 id='request-headers-4'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To get loyalty program(s) by organization Id, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{organizationId}}` with the organization Id being queried.</span>
+
+curl -X GET
+  -H <span class="s2">"content-type: accept"</span> 
+  -H <span class="s2">"authorization: bearer {{token}}"</span> 
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgram/Organization/{{organizationId}}"</span>
+
+</code></pre>
+<blockquote>
+<p>Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 200 OK
+
+</code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sample Real Rewards"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"organizationId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f9875701-e883-413a-8770-7f43925b6f75"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-02T23:02:01.1317996+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-02T23:01:59.4734384+00:00"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 200 OK</code></p>
+
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>name</strong></td>
+<td>The loyalty program name.</td>
+</tr>
+<tr>
+<td><strong>organizationId</strong></td>
+<td>The organization Id.</td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>The loyalty program start date.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>The loyalty program end date.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>The date and time of when the loyalty program was created.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>204</td>
+<td>no content found</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h1 id='loyalty-program-membership'>Loyalty Program Membership</h1><h2 id='create-a-membership'>Create a membership</h2><h2 id='get-a-membership-by-id'>Get a membership by Id</h2><h2 id='get-memberships-by-listing'>Get memberships by listing</h2><h2 id='get-memberships-by-organization'>Get memberships by organization</h2><h2 id='get-memberships-by-profile'>Get memberships by profile</h2><h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
