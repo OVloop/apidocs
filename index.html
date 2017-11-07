@@ -369,9 +369,6 @@
                     <a href="#get-loyalty-reward-by-id" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty reward by Id</a>
                   </li>
                   <li>
-                    <a href="#get-loyalty-rewards-by-listing" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards by listing</a>
-                  </li>
-                  <li>
                     <a href="#get-loyalty-rewards-by-loyalty-program" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards by loyalty program</a>
                   </li>
                   <li>
@@ -1964,12 +1961,6 @@ Location: /api/LoyaltyProgram/25579a2e-ff2b-4cc5-a0b6-17140375da18
 <td>N</td>
 <td>The end date for the loyalty program. If not provided, <code>9999-12-31 23:59:59 +00:00</code> will be used.</td>
 </tr>
-<tr>
-<td><strong>created</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The timestamp of the loyalty program creation (system generated).</td>
-</tr>
 </tbody></table>
 
 <p>Please see above for available optional properties.</p>
@@ -3000,7 +2991,567 @@ HTTP/1.1 200 OK
 <td>unknown server error</td>
 </tr>
 </tbody></table>
-<h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
+<h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1>
+<p>The Loyalty Reward resource represents a reward offerred by a loyalty program.</p>
+
+<p>Below are the fields related to the Loyalty Reward resource including field types and whether the fields are required for resource creation:</p>
+
+<p><strong>Available LoyaltyReward data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyRewardId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The loyalty reward Id (system generated).</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardText</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The loyalty reward text.</td>
+</tr>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardIconName</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardTypeId</strong></td>
+<td>int32</td>
+<td>Y</td>
+<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
+</tr>
+<tr>
+<td><strong>thresholdValue</strong></td>
+<td>double</td>
+<td>Y</td>
+<td>The reward threshold value.</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueInteger</strong></td>
+<td>boolean</td>
+<td>N</td>
+<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueRelative</strong></td>
+<td>boolean</td>
+<td>N</td>
+<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>DateTimeOffset</td>
+<td>Y</td>
+<td>The date and time of the loyalty reward creation.</td>
+</tr>
+</tbody></table>
+<h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2>
+<p>This endpoint creates a loyalty reward.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>POST https://ovloop.io/api/LoyaltyReward</code></p>
+<h3 id='request-headers'>Request Headers</h3>
+<p><code>Content-Type: application/json</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To create a sample loyalty reward, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code>
+<span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
+
+curl -i -X POST
+  -H <span class="s2">"content-type: application/json"</span>
+  -H <span class="s2">"authorization: bearer {{token}}"</span>
+  -d <span class="s2">"{
+    'loyaltyProgramId' : '25579a2e-ff2b-4cc5-a0b6-17140375da18',
+    'loyaltyRewardIconName' : 'money-icon',
+    'loyaltyRewardTypeId' : 1,
+    'loyaltyRewardText' : 'Get 20% off (up to </span><span class="nv">$20</span><span class="s2">) after 3 qualifying visits',
+    'thresholdValue': 3,
+    'isThresholdValueInteger': 1,
+    'isThresholdValueRelative': 1,
+    'startDate' : '2017-01-01T00:00:00+00:00'
+    }"</span>
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyReward"</span>
+
+</code></pre>
+<blockquote>
+<p>Sample Request Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"loyaltyProgramId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyRewardIconName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"money-icon"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyRewardTypeId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyRewardText"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off (up to $20) after 3 qualifying visits"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"thresholdValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isThresholdValueInteger"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isThresholdValueRelative"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"startDate"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-01T00:00:00+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<blockquote>
+<p>Sample Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 201 Created
+
+Location: /api/LoyaltyReward/b1ab91cc-c05d-48f3-8bed-5941db00dea1
+
+</code></pre>
+<p><strong>Available LoyaltyReward data (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyRewardText</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The loyalty reward text.</td>
+</tr>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardIconName</strong></td>
+<td>GUID</td>
+<td>Y</td>
+<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardTypeId</strong></td>
+<td>int32</td>
+<td>Y</td>
+<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>DateTimeOffset</td>
+<td>N</td>
+<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
+</tr>
+<tr>
+<td><strong>thresholdValue</strong></td>
+<td>double</td>
+<td>Y</td>
+<td>The reward threshold value.</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueInteger</strong></td>
+<td>boolean</td>
+<td>N</td>
+<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueRelative</strong></td>
+<td>boolean</td>
+<td>N</td>
+<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 201 Created</code></p>
+
+<p><code>Location: /api/LoyaltyReward/b1ab91cc-c05d-48f3-8bed-5941db00dea1</code></p>
+
+<aside class="notice">
+The caller should retain the `loyaltyRewardId` generated within their own system for future API calls for the specific loyalty reward.
+</aside>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>409</td>
+<td>foreign key or unique key constraint error - Id within the request body does not exist or entity already exists</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2>
+<p>This endpoint returns the loyalty reward for the Id specified.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://ovloop.io/api/LoyaltyReward/{Id}</code></p>
+<h3 id='uri-parameters'>URI Parameters</h3>
+<p><strong>Id</strong> <code>GUID</code> (required) - The unique identifier of the loyalty reward.</p>
+<h3 id='request-headers-2'>Request Headers</h3>
+<p><code>Content-Type: accept</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To get loyalty reward by Id, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{Id}}` with the loyalty reward Id being queried.</span>
+
+curl -X GET
+  -H <span class="s2">"content-type: accept"</span> 
+  -H <span class="s2">"authorization: bearer {{token}}"</span> 
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyReward/{{Id}}"</span>
+
+</code></pre>
+<blockquote>
+<p>Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 200 OK
+
+</code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"loyaltyRewardId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1ab91cc-c05d-48f3-8bed-5941db00dea1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyRewardTypeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyRewardText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off (up to $20) after 3 qualifying visits"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"loyaltyRewardIconName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"money-icon"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"thresholdValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isThresholdValueInteger"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isThresholdValueRelative"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-07T19:26:33.7696857+00:00"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 200 OK</code></p>
+
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyRewardId</strong></td>
+<td>The loyalty reward Id (system generated).</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardText</strong></td>
+<td>The loyalty reward text.</td>
+</tr>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardIconName</strong></td>
+<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardTypeId</strong></td>
+<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
+</tr>
+<tr>
+<td><strong>thresholdValue</strong></td>
+<td>The reward threshold value.</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueInteger</strong></td>
+<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueRelative</strong></td>
+<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>The date and time of the loyalty reward creation.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>204</td>
+<td>no content found</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2>
+<p>This endpoint returns the loyalty reward(s) for the loyalty program Id specified.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://ovloop.io/api/LoyaltyReward/LoyaltyProgram/{Id}</code></p>
+<h3 id='uri-parameters-2'>URI Parameters</h3>
+<p><strong>loyaltyProgramId</strong> <code>GUID</code> (required) - The unique identifier of the loyalty program.</p>
+<h3 id='request-headers-3'>Request Headers</h3>
+<p><code>Content-Type: accept</code></p>
+
+<p><code>Authorization: bearer {{token}}</code></p>
+
+<blockquote>
+<p>To get loyalty reward(s) by loyalty program Id, use this code:</p>
+</blockquote>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{loyaltyProgramId}}` with the loyalty program Id being queried.</span>
+
+curl -X GET
+  -H <span class="s2">"content-type: accept"</span> 
+  -H <span class="s2">"authorization: bearer {{token}}"</span> 
+  --url <span class="s2">"https://ovloop.io/api/LoyaltyReward/LoyaltyProgram{{loyaltyProgramId}}"</span>
+
+</code></pre>
+<blockquote>
+<p>Response Headers</p>
+</blockquote>
+<pre class="highlight plaintext"><code>
+HTTP/1.1 200 OK
+
+</code></pre>
+<blockquote>
+<p>Response Body</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="w">
+</span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"loyaltyRewardId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1ab91cc-c05d-48f3-8bed-5941db00dea1"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loyaltyRewardTypeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loyaltyRewardText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off (up to $20) after 3 qualifying visits"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loyaltyRewardIconName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"money-icon"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"thresholdValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isThresholdValueInteger"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isThresholdValueRelative"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-07T19:26:33.7696857+00:00"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
+</span></code></pre>
+<p><strong>Response Headers</strong></p>
+
+<p><code>HTTP/1.1 200 OK</code></p>
+
+<p><strong>Response Body</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>loyaltyRewardId</strong></td>
+<td>The loyalty reward Id (system generated).</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardText</strong></td>
+<td>The loyalty reward text.</td>
+</tr>
+<tr>
+<td><strong>loyaltyProgramId</strong></td>
+<td>The loyalty program Id.</td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardIconName</strong></td>
+<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
+</tr>
+<tr>
+<td><strong>loyaltyRewardTypeId</strong></td>
+<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
+</tr>
+<tr>
+<td><strong>startDate</strong></td>
+<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
+</tr>
+<tr>
+<td><strong>endDate</strong></td>
+<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
+</tr>
+<tr>
+<td><strong>thresholdValue</strong></td>
+<td>The reward threshold value.</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueInteger</strong></td>
+<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
+</tr>
+<tr>
+<td><strong>isThresholdValueRelative</strong></td>
+<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
+</tr>
+<tr>
+<td><strong>created</strong></td>
+<td>The date and time of the loyalty reward creation.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Response Status Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>200</td>
+<td>successful request</td>
+</tr>
+<tr>
+<td>204</td>
+<td>no content found</td>
+</tr>
+<tr>
+<td>401</td>
+<td>the client is not properly authenticated</td>
+</tr>
+<tr>
+<td>404</td>
+<td>if a validation fails</td>
+</tr>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+
+<p><strong>Application Error Codes</strong></p>
+
+<table><thead>
+<tr>
+<th>Status Code</th>
+<th>Meaning</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>500</td>
+<td>unknown server error</td>
+</tr>
+</tbody></table>
+<h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
