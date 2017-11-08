@@ -335,7 +335,10 @@
                     <a href="#get-a-membership-by-id" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get a membership by Id</a>
                   </li>
                   <li>
-                    <a href="#get-memberships-by-loyalty-program" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by loyalty program</a>
+                    <a href="#get-memberships-by-listing" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by listing</a>
+                  </li>
+                  <li>
+                    <a href="#get-memberships-by-organization" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by organization</a>
                   </li>
                   <li>
                     <a href="#get-memberships-by-profile" class="toc-h2 toc-link" data-title="Loyalty Program Membership">Get memberships by profile</a>
@@ -367,6 +370,9 @@
                   </li>
                   <li>
                     <a href="#get-loyalty-reward-by-id" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty reward by Id</a>
+                  </li>
+                  <li>
+                    <a href="#get-loyalty-rewards-by-listing" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards by listing</a>
                   </li>
                   <li>
                     <a href="#get-loyalty-rewards-by-loyalty-program" class="toc-h2 toc-link" data-title="Loyalty Reward">Get loyalty rewards by loyalty program</a>
@@ -402,6 +408,14 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#profile" class="toc-h1 toc-link" data-title="Profile">Profile</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#create-profile" class="toc-h2 toc-link" data-title="Profile">Create Profile</a>
+                  </li>
+              </ul>
+          </li>
       </div>
         <ul class="toc-footer">
             <li><a href='https://onvocal.com'>&copy; 2017, ONvocal, Inc.</a></li>
@@ -425,11 +439,11 @@
 
 <p>OVLoop API is organized around REST and uses HTTP verbs and response codes that most clients are familiar with. All requests must be formatted as Content-Type: application/json (except where noted). All responses are also formatted JSON, encoded in the UTF-8 character encoding (Content-Type: application/json; charset=utf-8). The Accept header will be ignored for all requests.</p>
 <h2 id='security'>Security</h2>
-<p>OVLoop uses <a href="https://jwt.io">JSON Web Tokens</a> with <a href="https://oauth.net/2/">OAuth2</a> for authentication of clients (i.e. &quot;profiles&quot;) with OVLoop API. JSON Web Tokens are an open, industry standard [RFC 7519] https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties. Tokens received are used within headers of subsequent requests to the OVLoop API.</p>
+<p>OVLoop uses <a href="https://jwt.io">JSON Web Tokens</a> with <a href="https://oauth.net/2/">OAuth2</a> for authentication of clients with OVLoop API. JSON Web Tokens are an open, industry standard [RFC 7519] https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties. Tokens received are used within headers of subsequent requests to the OVLoop API.</p>
 
 <ol>
-<li>First, encode your client credentials as instructed in the Authentication section below.</li>
-<li>Then you exchange these client credentials for an OAuth 2.0 JSON Web Bearer token.</li>
+<li>First, encode your credentials as instructed in the Authentication section below.</li>
+<li>Then you exchange these credentials for an OAuth 2.0 JSON Web Bearer token.</li>
 <li>Once you’ve done that, you simply include your token with all of your OVLoop requests.</li>
 </ol>
 
@@ -595,11 +609,39 @@ HTTP/1.1 404 Bad Request:
 </tr>
 </tbody></table>
 <h1 id='authentication'>Authentication</h1>
-<p>OVLoop uses <a href="https://jwt.io">JSON Web Tokens</a> with <a href="https://oauth.net/2/">OAuth2</a> for authentication of clients (i.e. &quot;profiles&quot;) with OVLoop API.  JSON Web Tokens are an open, industry standard [RFC 7519] https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties.  Tokens received are used within headers of subsequent requests to the OVLoop API.</p>
+<p>OVLoop uses <a href="https://jwt.io">JSON Web Tokens</a> with <a href="https://oauth.net/2/">OAuth2</a> for authentication of clients with OVLoop API.  JSON Web Tokens are an open, industry standard [RFC 7519] https://tools.ietf.org/html/rfc7519) method for representing claims securely between two parties.  Tokens received are used within headers of subsequent requests to the OVLoop API.</p>
+
+<p><strong>Authentication Grant Types</strong></p>
+
+<p>The OVLoop API has several different grant types, which generate tokens with different authorization scopes and permissions. The following table describes the different grant types, and provides a value to be used in the <strong>grant_type</strong> field when making requests agains the authentication endpoint.</p>
+
+<table><thead>
+<tr>
+<th>Grant type</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>Client Credentials Grant</strong></td>
+<td>client_credentials</td>
+<td>The Client Credentials grant generates tokens with permissions that allow full control over all resources owned by the requesting party, therefore it should only be used by an automated processes or in cases where a user is authorized to access all resources.<br /><br>The Client Credentials grant should only be used for a confidential client communicating with our server, such as in the case of a customer or 3rd-party accessing our APIs from their secure server. The client_secret must never be embedded in an SDK or app, or otherwise leaked outside of the secure server.</td>
+</tr>
+<tr>
+<td><strong>Profile Grant</strong></td>
+<td>profile_grant</td>
+<td>The Profile grant should be used for scenarios where the end-user does not have an OV user account and it is necessary to establish a session from a client that may leak information, such as a mobile device where any malicious user could decompile the binary to extract hard-coded API credentials. This should not be used by 3rd party apps who want to gain access to an end-user&#39;s OV account.<br/><br />This grant is expected to be used when the client already knows the profile ID or external ID of an existing profile that it wishes to modify.<br /><br />The token returned by this type of grant can only be used to view and edit the profile (including preferences and events) specified in the authorization request. It cannot be used to modify any other profiles or access any other APIs.<br /><br />This grant type allows us to give some protection against malicious users who would decompile a binary to get the client_id. A malicious user who gains access to the client_id and their profile ID, or sniffs the bearer token after authorization, can only use it to modify data of their own profile.</td>
+</tr>
+<tr>
+<td><strong>Restricted API Grant</strong></td>
+<td>restricted_api_grant</td>
+<td>The Restricted API Grant should be used for scenarios where the end-user does not have a OV account and it is necessary to establish a session from a client that may leak information, such as a mobile device where any malicious user could decompile the binary to extract hard-coded API credentials. This should not be used by 3rd party apps who want to gain access to an end-user&#39;s OV account.<br /><br />The token returned by this type of grant can only be used to view the specifiid profile or to create a new profile. It cannot be used to modify any profiles or preferences or access any other APIs. After creating a profile, this token should immediately be discarded and replaced with the token returned from Profile Grant. If the client already knows a profile ID or external ID of an existing profile, it should use Profile Grant rather than this grant.<br /><br />This grant type allows us to give some protection against malicious users who would decompile a binary to get the client_id. If the client has unpredictable external IDs, or is not using external IDs, a malicious user who gains access to the client_id can only use it to create new profiles; they cannot modify data in those profiles, or edit data of other existing profiles.</td>
+</tr>
+</tbody></table>
 
 <p>The following properties are used with Authentication:</p>
 
-<p><strong>Available Authentication data (property names)</strong></p>
+<p><strong>Client Credentials Grant Request Parameters (property names)</strong></p>
 
 <table><thead>
 <tr>
@@ -613,19 +655,73 @@ HTTP/1.1 404 Bad Request:
 <td><strong>client_id</strong></td>
 <td>string</td>
 <td>Y</td>
-<td>The client ID.  This ID will be provided to you by the OVLoop support team and is application specific.</td>
+<td>The client ID. This ID will be provided to you by the OVLoop support team and is customer-specific.</td>
 </tr>
 <tr>
 <td><strong>grant_type</strong></td>
 <td>string</td>
 <td>Y</td>
-<td>The grant type. Use &quot;client_credentials&quot; for accesing resources from a server.</td>
+<td>client_credentials</td>
 </tr>
 <tr>
 <td><strong>client_secret</strong></td>
-<td>GUID</td>
+<td>string</td>
 <td>Y</td>
-<td>The client secret provided to you when being issues the client Id.</td>
+<td>The client secret provided to you when issued a client Id.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Profile Grant Request Parameters (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>client_id</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The client ID. This ID will be provided to you by the OVLoop support team and is customer-specific.</td>
+</tr>
+<tr>
+<td><strong>grant_type</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>profile</td>
+</tr>
+<tr>
+<td><strong>profile_id</strong></td>
+<td>UUID</td>
+<td>Y</td>
+<td>The profile ID whose data this token will be restricted to</td>
+</tr>
+</tbody></table>
+
+<p><strong>Restricted API Grant Request Parameters (property names)</strong></p>
+
+<table><thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><strong>client_id</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>The client ID. This ID will be provided to you by the OVLoop support team and is customer-specific.</td>
+</tr>
+<tr>
+<td><strong>grant_type</strong></td>
+<td>string</td>
+<td>Y</td>
+<td>restricted</td>
 </tr>
 </tbody></table>
 <h2 id='generate-access-token'>Generate Access Token</h2>
@@ -1848,7 +1944,7 @@ The caller should retain the `offerId` generated and displayed in the Location h
 <tr>
 <td><strong>loyaltyProgramId</strong></td>
 <td>GUID</td>
-<td>Y</td>
+<td>N</td>
 <td>The loyalty program ID (system generated).</td>
 </tr>
 <tr>
@@ -1866,13 +1962,13 @@ The caller should retain the `offerId` generated and displayed in the Location h
 <tr>
 <td><strong>startDate</strong></td>
 <td>DateTimeOffset</td>
-<td>N</td>
+<td>Y</td>
 <td>The start date for the loyalty program. If not provided, the current date and time will be used.</td>
 </tr>
 <tr>
 <td><strong>endDate</strong></td>
 <td>DateTimeOffset</td>
-<td>N</td>
+<td>Y</td>
 <td>The end date for the loyalty program. If not provided, <code>9999-12-31 23:59:59 +00:00</code> will be used.</td>
 </tr>
 <tr>
@@ -1949,21 +2045,7 @@ Location: /api/LoyaltyProgram/25579a2e-ff2b-4cc5-a0b6-17140375da18
 <td>Y</td>
 <td>The organization ID for the merchant organization sponsoring the loyalty program.</td>
 </tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The start date for the loyalty program. If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The end date for the loyalty program. If not provided, <code>9999-12-31 23:59:59 +00:00</code> will be used.</td>
-</tr>
 </tbody></table>
-
-<p>Please see above for available optional properties.</p>
 
 <p><strong>Response Headers</strong></p>
 
@@ -2025,7 +2107,7 @@ The caller should retain the `loyaltyProgramId` generated within their own syste
 <h3 id='uri-parameters'>URI Parameters</h3>
 <p><strong>Id</strong> <code>GUID</code> (required) - The unique identifier of the loyalty program.</p>
 <h3 id='request-headers-2'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
+<p><code>Content-Type: application/json</code></p>
 
 <p><code>Authorization: bearer {{token}}</code></p>
 
@@ -2150,7 +2232,7 @@ HTTP/1.1 200 OK
 <h3 id='uri-parameters-2'>URI Parameters</h3>
 <p><strong>listingId</strong> <code>GUID</code> (required) - The unique identifier of the listing.</p>
 <h3 id='request-headers-3'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
+<p><code>Content-Type: application/json</code></p>
 
 <p><code>Authorization: bearer {{token}}</code></p>
 
@@ -2277,7 +2359,7 @@ HTTP/1.1 200 OK
 <h3 id='uri-parameters-3'>URI Parameters</h3>
 <p><strong>listingId</strong> <code>GUID</code> (required) - The unique identifier of the organization.</p>
 <h3 id='request-headers-4'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
+<p><code>Content-Type: application/json</code></p>
 
 <p><code>Authorization: bearer {{token}}</code></p>
 
@@ -2397,12 +2479,14 @@ HTTP/1.1 200 OK
 <td>unknown server error</td>
 </tr>
 </tbody></table>
-<h1 id='loyalty-program-membership'>Loyalty Program Membership</h1>
-<p>The Loyalty Program Membership resource represents the user profile memberships in various loyalty programs.</p>
+<h1 id='loyalty-program-membership'>Loyalty Program Membership</h1><h2 id='create-a-membership'>Create a membership</h2><h2 id='get-a-membership-by-id'>Get a membership by Id</h2><h2 id='get-memberships-by-listing'>Get memberships by listing</h2><h2 id='get-memberships-by-organization'>Get memberships by organization</h2><h2 id='get-memberships-by-profile'>Get memberships by profile</h2><h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1><h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2><h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2><h2 id='get-loyalty-rewards-by-listing'>Get loyalty rewards by listing</h2><h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2><h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2><h1 id='profile'>Profile</h1>
+<p>A Profile is OV&#39;s record of an end-user. It contains all data related to that user, either directly inside the profile entity, or in entities that link to profile. This data contained directly in the Profile entity is basic information such as name, email address, phone number, etc. Other data, contained in other entities that link to the profile, includes location data, preferences &amp; attributes about the user, records of notifications sent, and event data.</p>
 
-<p>Below are the fields related to the Loyalty Program Membership resource including field types and whether the fields are required for resource creation:</p>
+<p>Creating a profile allows our mobile SDK to be activated for an end-user in order to collect location data. It also allows you to attach preferences, attributes, and events to the user, which can be used inside our engagement platform as components of rules for targeting users with messages and offers.</p>
 
-<p><strong>Available LoyaltyProgramMembership data (property names)</strong></p>
+<p>Below are the fields stored in the Profile entity:</p>
+
+<p><strong>Available Profile data (property names)</strong></p>
 
 <table><thead>
 <tr>
@@ -2413,71 +2497,83 @@ HTTP/1.1 200 OK
 </tr>
 </thead><tbody>
 <tr>
-<td><strong>loyaltyProgramMembershipId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty program member Id (system generated).</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
 <td><strong>profileId</strong></td>
-<td>GUID</td>
+<td>UUID</td>
+<td>N</td>
+<td>The unique identifier of the profile. This field is generated by the OV backend upon profile creation, and included in the response of a successful create. If you are not using the externalId field, then you should save this value in your system in order to access and modify this profile&#39;s data at a later time</td>
+</tr>
+<tr>
+<td><strong>externalId</strong></td>
+<td>string</td>
+<td>N</td>
+<td>An optional value that links the profile to a value that uniquely identifies this end-user in your system, such as their username from your system. Setting this value allows you to use retrieve profiles using this value and eliminates the need to modify your system to store our profileId.</td>
+</tr>
+<tr>
+<td><strong>email</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The user&#39;s email address</td>
+</tr>
+<tr>
+<td><strong>primaryPhone</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The user&#39;s primary phone number</td>
+</tr>
+<tr>
+<td><strong>firstName</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The user&#39;s first name</td>
+</tr>
+<tr>
+<td><strong>lastName</strong></td>
+<td>string</td>
+<td>N</td>
+<td>The user&#39;s last name</td>
+</tr>
+<tr>
+<td><strong>acceptTandC</strong></td>
+<td>bool</td>
 <td>Y</td>
-<td>The profile Id (detected and populated from the JSON web token when creating an entity).</td>
+<td>Indication of acceptance of terms &amp; conditions. This field must be present and must be true. The end-user must accept our terms and conditions before a profile is created</td>
 </tr>
 <tr>
-<td><strong>membershipNumber</strong></td>
-<td>int32</td>
-<td>N</td>
-<td>The external membership number.</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty program membership enrollment start date.  If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty program membership enrollment end date.  If not provided, &#39;9999-12-31 23:59:59 +00:00 will be used.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The timestamp of the loyalty program creation (system generated).</td>
+<td><strong>isOverThirteen</strong></td>
+<td>bool</td>
+<td>Y</td>
+<td>Indication that the user is over the age of 13. This field must be present and must be true. Users under 13 are not allowed.</td>
 </tr>
 </tbody></table>
-<h2 id='create-a-membership'>Create a membership</h2>
-<p>This endpoint creates a loyalty program membership for the currently authenticated profile (i.e. it enrolls the profile in the program).  The loyaltyProgramMembershipId will be returned in the Location header and should be saved to update the listing after creation.</p>
+<h2 id='create-profile'>Create Profile</h2>
+<p>This endpoint creates a new profile. The profileId is returned as the last section of the path in the location header.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://ovloop.io/api/LoyaltyProgramMembership</code></p>
+<p><code>POST https://ovloop.io/api/Profile</code></p>
 <h3 id='request-headers'>Request Headers</h3>
 <p><code>Content-Type: application/json</code></p>
 
 <p><code>Authorization: bearer {{token}}</code></p>
 
 <blockquote>
-<p>To create a sample loyalty program membership, use this code:</p>
+<p>To create a sample profile, use this code:</p>
 </blockquote>
 <pre class="highlight shell tab-shell"><code>
 <span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
+<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication)</span>
 
-curl -i -X POST
-  -H <span class="s2">"content-type: application/json"</span>
-  -H <span class="s2">"authorization: bearer {{token}}"</span>
-  -d <span class="s2">"{
-    'loyaltyProgramId':'{{loyaltyProgramId}}'
-    }"</span>
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgramMembership"</span>
+curl -i -X POST <span class="se">\</span>
+  https://ovloop.io/api/Profile <span class="se">\</span>
+  -H <span class="s1">'authorization: bearer {{token}}'</span> <span class="se">\</span>
+  -H <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
+  -d <span class="s1">'{
+    "primaryPhone": "1231231234",
+    "externalId": "5691710E-A334-4D32-A09A-F725F543A5F7",
+    "email": "noreply@onvocal.com",
+    "firstName": "Joe",
+    "lastName": "Smith",
+    "acceptTandC": true,
+    "isOverThirteen": true
+}'</span>
 
 </code></pre>
 <blockquote>
@@ -2485,79 +2581,25 @@ curl -i -X POST
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="w">
 </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="w">
+    </span><span class="s2">"primaryPhone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1231231234"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"externalId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5691710E-A334-4D32-A09A-F725F543A5F7"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"joe.smith@fake.com"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Joe"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lastName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Smith"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"acceptTandC"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isOverThirteen"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
-</span></code></pre>
+</span></code></pre><h3 id='response-201-created'>Response 201: Created</h3>
 <blockquote>
-<p>Sample Response Headers</p>
+<p>Response Headers</p>
 </blockquote>
 <pre class="highlight plaintext"><code>
-HTTP/1.1 201 Created
+Content-Length: 0
+Date: Fri, 24 Jul 2015 15:19:33 GMT
+Location: /api/Profile/7995c5a8-b98e-4cfb-807d-eeada6890ac0
 
-/api/LoyaltyProgramMembership/cc003695-1ffd-4b3e-a28a-c259235b4d03
-
-</code></pre>
-<p><strong>Available LoyaltyProgramMembership data (property names)</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>profileId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The profile Id (detected and populated from the JSON web token when creating an entity).</td>
-</tr>
-<tr>
-<td><strong>membershipNumber</strong></td>
-<td>int32</td>
-<td>N</td>
-<td>The external membership number.</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty program membership enrollment start date.  If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty program membership enrollment end date.  If not provided, &#39;9999-12-31 23:59:59 +00:00 will be used.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The timestamp of the loyalty program creation (system generated).</td>
-</tr>
-</tbody></table>
-
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 201 Created</code></p>
-
-<p><code>Location: /api/LoyaltyProgramMembership/cc003695-1ffd-4b3e-a28a-c259235b4d03</code></p>
-
-<aside class="notice">
-The caller should retain the `loyaltyProgramMembershipId` generated within their own system for future API calls for the specific loyalty program membership.
-</aside>
-
-<p><strong>Response Status Codes</strong></p>
-
+</code></pre><h3 id='response-status-codes'>Response Status Codes</h3>
 <table><thead>
 <tr>
 <th>Status Code</th>
@@ -2566,23 +2608,19 @@ The caller should retain the `loyaltyProgramMembershipId` generated within their
 </thead><tbody>
 <tr>
 <td>201</td>
-<td>successful request</td>
+<td>Successful profile creation</td>
 </tr>
 <tr>
 <td>401</td>
-<td>the client is not properly authenticated</td>
+<td>Unauthorized request</td>
 </tr>
 <tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>409</td>
-<td>foreign key or unique key constraint error - Id within the request body does not exist or entity already exists</td>
+<td>400</td>
+<td>Bad request. Verify externalId, if provided, is unique. Verify acceptTandC and isOverThirteen are provided and set to <strong>true</strong></td>
 </tr>
 <tr>
 <td>500</td>
-<td>unknown server error</td>
+<td>Internal server error</td>
 </tr>
 </tbody></table>
 
@@ -2596,962 +2634,10 @@ The caller should retain the `loyaltyProgramMembershipId` generated within their
 </thead><tbody>
 <tr>
 <td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h2 id='get-a-membership-by-id'>Get a membership by Id</h2>
-<p>The endpoint retrieves the loyalty program membership by Id.</p>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET https://ovloop.io/api/LoyaltyProgramMembership/{loyaltyProgramMembershipId}</code></p>
-<h3 id='uri-parameters'>URI Parameters</h3>
-<p><strong>loyaltyProgramMembershipId</strong> <code>GUID</code> (required) - The unique identifier of the loyalty program membership.</p>
-<h3 id='request-headers-2'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
-
-<p><code>Authorization: bearer {{token}}</code></p>
-
-<blockquote>
-<p>To get loyalty program membership by Id, use this code:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{loyaltyProgramMembershipId}}` with the loyalty program membership Id being queried.</span>
-
-curl -i -X GET
-  -H <span class="s2">"content-type: accept"</span>
-  -H <span class="s2">"authorization: bearer {{token}}"</span>
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgramMembership/{{loyaltyProgramMembershipId}}"</span>
-
-</code></pre>
-<blockquote>
-<p>Response Headers</p>
-</blockquote>
-<pre class="highlight plaintext"><code>
-HTTP/1.1 200 OK
-
-</code></pre>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"loyaltyProgramMembershipId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc003695-1ffd-4b3e-a28a-c259235b4d03"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224a0735-bb34-469a-800a-60ea71e24691"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"profileId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ec0b7413-8ecb-476d-8b82-b87d974c4a67"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"membershipNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-04-05T00:00:00+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-06T22:48:53.1831462+00:00"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 200 OK</code></p>
-
-<p><strong>Response Body</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyProgramMembershipId</strong></td>
-<td>The loyalty program member Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>profileId</strong></td>
-<td>The profile Id.</td>
-</tr>
-<tr>
-<td><strong>membershipNumber</strong></td>
-<td>The external membership number.</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>The loyalty program membership enrollment start date.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>The loyalty program membership enrollment end date.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>The timestamp of the loyalty program creation.</td>
+<td>Internal server error</td>
 </tr>
 </tbody></table>
 
-<p><strong>Response Status Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td>successful request</td>
-</tr>
-<tr>
-<td>204</td>
-<td>no content found</td>
-</tr>
-<tr>
-<td>401</td>
-<td>the client is not properly authenticated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-
-<p><strong>Application Error Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h2 id='get-memberships-by-loyalty-program'>Get memberships by loyalty program</h2>
-<p>The endpoint retrieves the loyalty program membership by loyalty program Id.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>GET https://ovloop.io/api/LoyaltyProgramMembership/LoyaltyProgram/{loyaltyProgramId}</code></p>
-<h3 id='uri-parameters-2'>URI Parameters</h3>
-<p><strong>loyaltyProgramId</strong> <code>GUID</code> (required) - The unique identifier of the loyalty program.</p>
-<h3 id='request-headers-3'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
-
-<p><code>Authorization: bearer {{token}}</code></p>
-
-<blockquote>
-<p>To get loyalty program membership(s) by loyalty program Id, use this code:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{loyaltyProgramId}}` with the loyalty program Id being queried.</span>
-
-curl -i -X GET
-  -H <span class="s2">"content-type: accept"</span>
-  -H <span class="s2">"authorization: bearer {{token}}"</span>
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgramMembership/LoyaltyProgram/{{loyaltyProgramId}}"</span>
-
-</code></pre>
-<blockquote>
-<p>Response Headers</p>
-</blockquote>
-<pre class="highlight plaintext"><code>
-HTTP/1.1 200 OK
-
-</code></pre>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"loyaltyProgramMembershipId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc003695-1ffd-4b3e-a28a-c259235b4d03"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224a0735-bb34-469a-800a-60ea71e24691"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"profileId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ec0b7413-8ecb-476d-8b82-b87d974c4a67"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"membershipNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-04-05T00:00:00+00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-06T22:48:53.1831462+00:00"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-
-</span></code></pre>
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 200 OK</code></p>
-
-<p><strong>Response Body</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyProgramMembershipId</strong></td>
-<td>The loyalty program member Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>profileId</strong></td>
-<td>The profile Id.</td>
-</tr>
-<tr>
-<td><strong>membershipNumber</strong></td>
-<td>The external membership number.</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>The loyalty program membership enrollment start date.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>The loyalty program membership enrollment end date.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>The timestamp of the loyalty program creation.</td>
-</tr>
-</tbody></table>
-
-<p><strong>Response Status Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td>successful request</td>
-</tr>
-<tr>
-<td>204</td>
-<td>no content found</td>
-</tr>
-<tr>
-<td>401</td>
-<td>the client is not properly authenticated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-
-<p><strong>Application Error Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h2 id='get-memberships-by-profile'>Get memberships by profile</h2>
-<p>The endpoint retrieves the loyalty program membership for the currently authenticated profile.</p>
-<h3 id='http-request-4'>HTTP Request</h3>
-<p><code>GET https://ovloop.io/api/LoyaltyProgramMembership</code></p>
-<h3 id='request-headers-4'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
-
-<p><code>Authorization: bearer {{token}}</code></p>
-
-<blockquote>
-<p>To get loyalty program membership(s) for the currently authenticated profile, use this code:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
-
-curl -i -X GET
-  -H <span class="s2">"content-type: accept"</span>
-  -H <span class="s2">"authorization: bearer {{token}}"</span>
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyProgramMembership"</span>
-
-</code></pre>
-<blockquote>
-<p>Response Headers</p>
-</blockquote>
-<pre class="highlight plaintext"><code>
-HTTP/1.1 200 OK
-
-</code></pre>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">[</span><span class="w">
-  </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"loyaltyProgramMembershipId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cc003695-1ffd-4b3e-a28a-c259235b4d03"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"224a0735-bb34-469a-800a-60ea71e24691"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"profileId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ec0b7413-8ecb-476d-8b82-b87d974c4a67"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"membershipNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-04-05T00:00:00+00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-06T22:48:53.1831462+00:00"</span><span class="w">
-  </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-
-</span></code></pre>
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 200 OK</code></p>
-
-<p><strong>Response Body</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyProgramMembershipId</strong></td>
-<td>The loyalty program member Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>profileId</strong></td>
-<td>The profile Id.</td>
-</tr>
-<tr>
-<td><strong>membershipNumber</strong></td>
-<td>The external membership number.</td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>The loyalty program membership enrollment start date.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>The loyalty program membership enrollment end date.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>The timestamp of the loyalty program creation.</td>
-</tr>
-</tbody></table>
-
-<p><strong>Response Status Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td>successful request</td>
-</tr>
-<tr>
-<td>204</td>
-<td>no content found</td>
-</tr>
-<tr>
-<td>401</td>
-<td>the client is not properly authenticated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-
-<p><strong>Application Error Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h1 id='loyalty-program-participating-listing'>Loyalty Program Participating Listing</h1><h2 id='create-a-participating-listing'>Create a participating listing</h2><h2 id='get-a-participating-listing-by-id'>Get a participating listing by Id</h2><h2 id='get-participating-listings-by-listing'>Get participating listings by listing</h2><h2 id='get-participating-listings-by-loyalty-program'>Get participating listings by loyalty program</h2><h1 id='loyalty-reward'>Loyalty Reward</h1>
-<p>The Loyalty Reward resource represents a reward offerred by a loyalty program.</p>
-
-<p>Below are the fields related to the Loyalty Reward resource including field types and whether the fields are required for resource creation:</p>
-
-<p><strong>Available LoyaltyReward data (property names)</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyRewardId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty reward Id (system generated).</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardText</strong></td>
-<td>string</td>
-<td>Y</td>
-<td>The loyalty reward text.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardIconName</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardTypeId</strong></td>
-<td>int32</td>
-<td>Y</td>
-<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
-</tr>
-<tr>
-<td><strong>thresholdValue</strong></td>
-<td>double</td>
-<td>Y</td>
-<td>The reward threshold value.</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueInteger</strong></td>
-<td>boolean</td>
-<td>N</td>
-<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueRelative</strong></td>
-<td>boolean</td>
-<td>N</td>
-<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>DateTimeOffset</td>
-<td>Y</td>
-<td>The date and time of the loyalty reward creation.</td>
-</tr>
-</tbody></table>
-<h2 id='create-a-loyalty-reward'>Create a loyalty reward</h2>
-<p>This endpoint creates a loyalty reward.</p>
-<h3 id='http-request'>HTTP Request</h3>
-<p><code>POST https://ovloop.io/api/LoyaltyReward</code></p>
-<h3 id='request-headers'>Request Headers</h3>
-<p><code>Content-Type: application/json</code></p>
-
-<p><code>Authorization: bearer {{token}}</code></p>
-
-<blockquote>
-<p>To create a sample loyalty reward, use this code:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code>
-<span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication).</span>
-
-curl -i -X POST
-  -H <span class="s2">"content-type: application/json"</span>
-  -H <span class="s2">"authorization: bearer {{token}}"</span>
-  -d <span class="s2">"{
-    'loyaltyProgramId' : '25579a2e-ff2b-4cc5-a0b6-17140375da18',
-    'loyaltyRewardIconName' : 'money-icon',
-    'loyaltyRewardTypeId' : 1,
-    'loyaltyRewardText' : 'Get 20% off (up to </span><span class="nv">$20</span><span class="s2">) after 3 qualifying visits',
-    'thresholdValue': 3,
-    'isThresholdValueInteger': 1,
-    'isThresholdValueRelative': 1,
-    'startDate' : '2017-01-01T00:00:00+00:00'
-    }"</span>
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyReward"</span>
-
-</code></pre>
-<blockquote>
-<p>Sample Request Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"loyaltyProgramId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyRewardIconName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"money-icon"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyRewardTypeId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyRewardText"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off (up to $20) after 3 qualifying visits"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"thresholdValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isThresholdValueInteger"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isThresholdValueRelative"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"startDate"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-01T00:00:00+00:00"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<blockquote>
-<p>Sample Response Headers</p>
-</blockquote>
-<pre class="highlight plaintext"><code>
-HTTP/1.1 201 Created
-
-Location: /api/LoyaltyReward/b1ab91cc-c05d-48f3-8bed-5941db00dea1
-
-</code></pre>
-<p><strong>Available LoyaltyReward data (property names)</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyRewardText</strong></td>
-<td>string</td>
-<td>Y</td>
-<td>The loyalty reward text.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardIconName</strong></td>
-<td>GUID</td>
-<td>Y</td>
-<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardTypeId</strong></td>
-<td>int32</td>
-<td>Y</td>
-<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>DateTimeOffset</td>
-<td>N</td>
-<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
-</tr>
-<tr>
-<td><strong>thresholdValue</strong></td>
-<td>double</td>
-<td>Y</td>
-<td>The reward threshold value.</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueInteger</strong></td>
-<td>boolean</td>
-<td>N</td>
-<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueRelative</strong></td>
-<td>boolean</td>
-<td>N</td>
-<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
-</tr>
-</tbody></table>
-
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 201 Created</code></p>
-
-<p><code>Location: /api/LoyaltyReward/b1ab91cc-c05d-48f3-8bed-5941db00dea1</code></p>
-
-<aside class="notice">
-The caller should retain the `loyaltyRewardId` generated within their own system for future API calls for the specific loyalty reward.
-</aside>
-
-<p><strong>Response Status Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>201</td>
-<td>successful request</td>
-</tr>
-<tr>
-<td>401</td>
-<td>the client is not properly authenticated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>409</td>
-<td>foreign key or unique key constraint error - Id within the request body does not exist or entity already exists</td>
-</tr>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-
-<p><strong>Application Error Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h2 id='get-loyalty-reward-by-id'>Get loyalty reward by Id</h2>
-<p>This endpoint returns the loyalty reward for the Id specified.</p>
-<h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET https://ovloop.io/api/LoyaltyReward/{Id}</code></p>
-<h3 id='uri-parameters'>URI Parameters</h3>
-<p><strong>Id</strong> <code>GUID</code> (required) - The unique identifier of the loyalty reward.</p>
-<h3 id='request-headers-2'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
-
-<p><code>Authorization: bearer {{token}}</code></p>
-
-<blockquote>
-<p>To get loyalty reward by Id, use this code:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{Id}}` with the loyalty reward Id being queried.</span>
-
-curl -X GET
-  -H <span class="s2">"content-type: accept"</span> 
-  -H <span class="s2">"authorization: bearer {{token}}"</span> 
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyReward/{{Id}}"</span>
-
-</code></pre>
-<blockquote>
-<p>Response Headers</p>
-</blockquote>
-<pre class="highlight plaintext"><code>
-HTTP/1.1 200 OK
-
-</code></pre>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-    </span><span class="s2">"loyaltyRewardId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1ab91cc-c05d-48f3-8bed-5941db00dea1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyRewardTypeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyRewardText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off (up to $20) after 3 qualifying visits"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"loyaltyRewardIconName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"money-icon"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"thresholdValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isThresholdValueInteger"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"isThresholdValueRelative"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-07T19:26:33.7696857+00:00"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span></code></pre>
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 200 OK</code></p>
-
-<p><strong>Response Body</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyRewardId</strong></td>
-<td>The loyalty reward Id (system generated).</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardText</strong></td>
-<td>The loyalty reward text.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardIconName</strong></td>
-<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardTypeId</strong></td>
-<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
-</tr>
-<tr>
-<td><strong>thresholdValue</strong></td>
-<td>The reward threshold value.</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueInteger</strong></td>
-<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueRelative</strong></td>
-<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>The date and time of the loyalty reward creation.</td>
-</tr>
-</tbody></table>
-
-<p><strong>Response Status Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td>successful request</td>
-</tr>
-<tr>
-<td>204</td>
-<td>no content found</td>
-</tr>
-<tr>
-<td>401</td>
-<td>the client is not properly authenticated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-
-<p><strong>Application Error Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h2 id='get-loyalty-rewards-by-loyalty-program'>Get loyalty rewards by loyalty program</h2>
-<p>This endpoint returns the loyalty reward(s) for the loyalty program Id specified.</p>
-<h3 id='http-request-3'>HTTP Request</h3>
-<p><code>GET https://ovloop.io/api/LoyaltyReward/LoyaltyProgram/{Id}</code></p>
-<h3 id='uri-parameters-2'>URI Parameters</h3>
-<p><strong>loyaltyProgramId</strong> <code>GUID</code> (required) - The unique identifier of the loyalty program.</p>
-<h3 id='request-headers-3'>Request Headers</h3>
-<p><code>Content-Type: accept</code></p>
-
-<p><code>Authorization: bearer {{token}}</code></p>
-
-<blockquote>
-<p>To get loyalty reward(s) by loyalty program Id, use this code:</p>
-</blockquote>
-<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request.</span>
-<span class="c"># Make sure to replace `{{token}}` with your current valid JSON web token (see Authentication) and replace the URI parameter `{{loyaltyProgramId}}` with the loyalty program Id being queried.</span>
-
-curl -X GET
-  -H <span class="s2">"content-type: accept"</span> 
-  -H <span class="s2">"authorization: bearer {{token}}"</span> 
-  --url <span class="s2">"https://ovloop.io/api/LoyaltyReward/LoyaltyProgram{{loyaltyProgramId}}"</span>
-
-</code></pre>
-<blockquote>
-<p>Response Headers</p>
-</blockquote>
-<pre class="highlight plaintext"><code>
-HTTP/1.1 200 OK
-
-</code></pre>
-<blockquote>
-<p>Response Body</p>
-</blockquote>
-<pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"loyaltyRewardId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b1ab91cc-c05d-48f3-8bed-5941db00dea1"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"loyaltyProgramId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"25579a2e-ff2b-4cc5-a0b6-17140375da18"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"loyaltyRewardTypeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"loyaltyRewardText"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get 20% off (up to $20) after 3 qualifying visits"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"loyaltyRewardIconName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"money-icon"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"thresholdValue"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"isThresholdValueInteger"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"isThresholdValueRelative"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-01-01T00:00:00+00:00"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9999-12-31T23:59:59+00:00"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2017-11-07T19:26:33.7696857+00:00"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-</span><span class="p">]</span><span class="w">
-
-</span></code></pre>
-<p><strong>Response Headers</strong></p>
-
-<p><code>HTTP/1.1 200 OK</code></p>
-
-<p><strong>Response Body</strong></p>
-
-<table><thead>
-<tr>
-<th>Property</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><strong>loyaltyRewardId</strong></td>
-<td>The loyalty reward Id (system generated).</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardText</strong></td>
-<td>The loyalty reward text.</td>
-</tr>
-<tr>
-<td><strong>loyaltyProgramId</strong></td>
-<td>The loyalty program Id.</td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardIconName</strong></td>
-<td>The loyalty reward icon name.  Available icons include: <ul><li><code>drink-icon</code> - drink icon</li><li><code>gift-icon</code> - gift icon</li><li><code>money-icon</code> - money icon</li><li><code>ticket-icon</code> - ticket icon</li></ul></td>
-</tr>
-<tr>
-<td><strong>loyaltyRewardTypeId</strong></td>
-<td>The loyalty reward type Id.  Available types include: <ul><li><code>1</code> - Rewards by visit</li><li><code>2</code> - Rewards by spend</li><li><code>3</code> - Special events rewards</li><li><code>4</code> - Birthday rewards</li></ul></td>
-</tr>
-<tr>
-<td><strong>startDate</strong></td>
-<td>The loyalty reward start date.  If not provided, the current date and time will be used.</td>
-</tr>
-<tr>
-<td><strong>endDate</strong></td>
-<td>The loyalty reward end date.  If not provided, <code>9999-12-31T23:59:59+00:00</code> will be used.</td>
-</tr>
-<tr>
-<td><strong>thresholdValue</strong></td>
-<td>The reward threshold value.</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueInteger</strong></td>
-<td>Signifies whether the threshold value represents an integer. If false, the value is a double. If true, the value is an integer (default = false).</td>
-</tr>
-<tr>
-<td><strong>isThresholdValueRelative</strong></td>
-<td>Signifies whether the threshold value represents a relative value. A relative value threshold is used for discounts (i.e. a threshold value of 0.10 would represent a 10% discount if this value was true).  The default value is false.</td>
-</tr>
-<tr>
-<td><strong>created</strong></td>
-<td>The date and time of the loyalty reward creation.</td>
-</tr>
-</tbody></table>
-
-<p><strong>Response Status Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>200</td>
-<td>successful request</td>
-</tr>
-<tr>
-<td>204</td>
-<td>no content found</td>
-</tr>
-<tr>
-<td>401</td>
-<td>the client is not properly authenticated</td>
-</tr>
-<tr>
-<td>404</td>
-<td>if a validation fails</td>
-</tr>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-
-<p><strong>Application Error Codes</strong></p>
-
-<table><thead>
-<tr>
-<th>Status Code</th>
-<th>Meaning</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>500</td>
-<td>unknown server error</td>
-</tr>
-</tbody></table>
-<h2 id='get-loyalty-rewards-summary'>Get loyalty rewards summary</h2><h2 id='get-loyalty-rewards-detail'>Get loyalty rewards detail</h2><h2 id='get-qualifying-events-summary'>Get qualifying events summary</h2><h1 id='loyalty-reward-event'>Loyalty Reward Event</h1><h2 id='create-a-loyalty-reward-event'>Create a loyalty reward event</h2><h2 id='get-loyalty-reward-event-by-id'>Get loyalty reward event by Id</h2><h2 id='get-loyalty-reward-events-by-loyalty-reward'>Get loyalty reward events by loyalty reward</h2><h2 id='redeem-loyalty-reward-event-i-e-reward'>Redeem loyalty reward event (i.e., reward)</h2><h2 id='reverse-loyalty-reward-event'>Reverse loyalty reward event</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
